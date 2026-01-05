@@ -96,6 +96,7 @@ class AuthCubit extends SafeCubit<AuthState> {
   }
 
   Future<void> cacheSession(Session session) async {
+    _hydrateLegacyCache(session);
     await _saveSessionUseCase(SaveSessionParams(session: session));
     emit(state.copyWith(session: session, status: state.status));
   }
@@ -120,6 +121,9 @@ void _hydrateLegacyCache(Session session) {
   legacy_data.pass = session.password ?? '';
   if (session.extras['selected_module'] is String) {
     legacy_data.selectedModule = session.extras['selected_module'];
+  }
+  if (session.treeJson != null && session.treeJson!.isNotEmpty) {
+    legacy_data.treeJson = session.treeJson!;
   }
 
   ensureOrganizationsLoaded();

@@ -1,6 +1,6 @@
 abstract class ApiPaths {
   static const login = 'login.php';
-  static const tree = 'tree.php';
+  static const tree = 'newtree.php';
   static const currentData = 'io_sensor_value_current_data.php';
   static const consumptions = 'consumptions.php';
   static const categoricalConsumptions = 'categorical_consumptions.php';

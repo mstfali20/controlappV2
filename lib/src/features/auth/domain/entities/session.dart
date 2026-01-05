@@ -15,7 +15,7 @@ class Session extends Equatable {
     this.token,
     this.tokenIssuedAt,
     this.tokenExpiresAt,
-    this.treeXml,
+    this.treeJson,
     this.extras = const {},
   });
 
@@ -30,7 +30,7 @@ class Session extends Equatable {
   final String? token;
   final DateTime? tokenIssuedAt;
   final DateTime? tokenExpiresAt;
-  final String? treeXml;
+  final String? treeJson;
   final Map<String, dynamic> extras;
 
   bool get hasValidToken {
@@ -55,7 +55,7 @@ class Session extends Equatable {
     String? token,
     DateTime? tokenIssuedAt,
     DateTime? tokenExpiresAt,
-    String? treeXml,
+    String? treeJson,
     Map<String, dynamic>? extras,
   }) {
     return Session(
@@ -71,7 +71,7 @@ class Session extends Equatable {
       token: token ?? this.token,
       tokenIssuedAt: tokenIssuedAt ?? this.tokenIssuedAt,
       tokenExpiresAt: tokenExpiresAt ?? this.tokenExpiresAt,
-      treeXml: treeXml ?? this.treeXml,
+      treeJson: treeJson ?? this.treeJson,
       extras: extras ?? this.extras,
     );
   }
@@ -88,7 +88,7 @@ class Session extends Equatable {
       'token': token,
       'token_issued_at': tokenIssuedAt?.toIso8601String(),
       'token_expires_at': tokenExpiresAt?.toIso8601String(),
-      'tree_xml': treeXml,
+      'tree_json': treeJson,
       'name': user.name,
       'lastname': user.lastname,
       'email': user.email,
@@ -113,7 +113,7 @@ class Session extends Equatable {
         token,
         tokenIssuedAt,
         tokenExpiresAt,
-        treeXml,
+        treeJson,
         extras,
       ];
 }

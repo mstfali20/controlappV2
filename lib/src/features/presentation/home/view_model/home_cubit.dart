@@ -1,5 +1,4 @@
 import 'package:controlapp/src/core/presentation/safe_cubit.dart';
-import 'package:xml/xml.dart' as xml;
 
 import 'package:controlapp/const/data.dart' as legacy_data;
 import 'package:controlapp/src/features/climate/domain/entities/climate_snapshot.dart';
@@ -9,7 +8,7 @@ import 'package:controlapp/src/features/energy/domain/usecases/fetch_energy_snap
 import 'package:controlapp/src/features/auth/domain/entities/session.dart';
 import 'package:controlapp/src/features/auth/domain/usecases/get_session_usecase.dart';
 import 'package:controlapp/src/features/auth/domain/usecases/update_session_selection_usecase.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'home_state.dart';
 
 class HomeCubit extends SafeCubit<HomeState> {
@@ -56,7 +55,7 @@ class HomeCubit extends SafeCubit<HomeState> {
       final serial = session.serial;
       final serialTitle = session.serialTitle;
       final plcTitle = session.plcTitle;
-      final treeXml = session.treeXml;
+      final treeJson = session.treeJson;
 
       final userSummary = HomeUserSummary(
         fullName: '${session.user.name} ${session.user.lastname}'.trim(),
@@ -77,7 +76,7 @@ class HomeCubit extends SafeCubit<HomeState> {
           selectedDeviceId: serial,
           selectedDeviceTitle: serialTitle,
           plcTitle: plcTitle,
-          treeXml: treeXml,
+          treeJson: treeJson,
           clearError: true,
         ),
       );
@@ -248,16 +247,15 @@ class HomeCubit extends SafeCubit<HomeState> {
     await refreshCurrentDevice(forceRefresh: true);
   }
 
-  Future<List<XmlModel>> loadTreeNodes() async {
-    final source = state.treeXml ?? state.session?.treeXml ?? '';
+  Future<List<TreeNode>> loadTreeNodes() async {
+    final source =
+        state.treeJson ?? state.session?.treeJson ?? legacy_data.treeJson;
     if (source.isEmpty) {
       return const [];
     }
 
     try {
-      final document = xml.XmlDocument.parse(source);
-      final nodes = document.findAllElements('node').toList();
-      return nodes.map(XmlModel.fromXml).toList();
+      return TreeNode.parseTreeNodes(source);
     } catch (_) {
       return const [];
     }
@@ -333,7 +331,7 @@ class HomeCubit extends SafeCubit<HomeState> {
     String? plcTitle,
     String? module,
     String? organizationId,
-    String? treeXml,
+    String? treeJson,
     Map<String, dynamic>? extras,
   }) async {
     try {
@@ -344,7 +342,7 @@ class HomeCubit extends SafeCubit<HomeState> {
           plcTitle: plcTitle,
           selectedModule: module,
           selectedOrganizationId: organizationId,
-          treeXml: treeXml,
+          treeJson: treeJson,
           extras: extras,
         ),
       );
@@ -370,8 +368,8 @@ class HomeCubit extends SafeCubit<HomeState> {
         session.selectedOrganizationId!.isNotEmpty) {
       legacy_data.organizationid = session.selectedOrganizationId!;
     }
-    if (session.treeXml != null && session.treeXml!.isNotEmpty) {
-      legacy_data.xmlString = session.treeXml!;
+    if (session.treeJson != null && session.treeJson!.isNotEmpty) {
+      legacy_data.treeJson = session.treeJson!;
     }
 
     final module = session.extras['selected_module']?.toString();

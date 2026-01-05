@@ -12,13 +12,15 @@ import 'package:controlapp/src/features/energy/presentation/pages/ges_screen.dar
 import 'package:controlapp/src/features/energy/presentation/pages/steam_screen.dart';
 import 'package:controlapp/src/features/energy/presentation/pages/water_screen.dart';
 import 'package:controlapp/l10n/app_localizations.dart';
+import 'package:controlapp/src/core/di/injector.dart';
+import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
+import 'package:controlapp/src/features/auth/domain/usecases/get_session_usecase.dart';
 
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:xml/xml.dart' as xml;
 
 class EnerjiWidget extends StatefulWidget {
   const EnerjiWidget({super.key});
@@ -28,9 +30,9 @@ class EnerjiWidget extends StatefulWidget {
 }
 
 class _EnerjiWidgetState extends State<EnerjiWidget> {
-  List<XmlModel> nodes = [];
-  XmlModel? nodesName;
-  XmlModel? organizizasyom;
+  List<TreeNode> nodes = [];
+  TreeNode? nodesName;
+  TreeNode? organizizasyom;
 
   // Veriler
   String? totalTuketimId;
@@ -81,57 +83,75 @@ class _EnerjiWidgetState extends State<EnerjiWidget> {
 
   Future<void> _loadData() async {
     try {
-      // XML verilerini yükle
-      nodes = await _loadAndParseXml();
+      // Tree verilerini yükle
+      nodes = await _loadAndParseTree();
 
+      final firmName = (userDataConst["firm_name"]?.toString() ?? '').trim();
       // "TanTekstil" düğümünü bul
       nodesName = nodes.firstWhere(
-        (node) => node.caption == userDataConst["firm_name"],
-        orElse: () => XmlModel.empty(),
+        (node) => node.caption.trim() == firmName,
+        orElse: () => TreeNode.empty(),
       );
 
-      if (nodesName == XmlModel.empty()) {
+      if (nodesName == TreeNode.empty()) {
         throw Exception("Düğümü bulunamadı.");
       }
 
       // "Enerji İzleme Sistemi" düğümünü bul
       organizizasyom = nodesName!.children.firstWhere(
-        (childNode) => childNode.caption == enerjiIzlem,
-        orElse: () => XmlModel.empty(),
+        (childNode) => childNode.caption.trim() == enerjiIzlem,
+        orElse: () => TreeNode.empty(),
       );
 
-      if (organizizasyom == XmlModel.empty()) {
+      if (organizizasyom == TreeNode.empty()) {
         throw Exception("Enerji İzleme Sistemi düğümü bulunamadı.");
       }
 
       // Organizasyon düğümünü işle
       _parseOrganization(organizizasyom!);
     } catch (e) {
-      log("XML verisi yüklenirken hata oluştu: $e");
+      log("Tree verisi yüklenirken hata oluştu: $e");
       rethrow; // Hata üst katmana iletilir
     }
   }
 
-  Future<List<XmlModel>> _loadAndParseXml() async {
+  Future<List<TreeNode>> _loadAndParseTree() async {
     try {
-      final document = xml.XmlDocument.parse(
-          xmlString); // xmlString'in doğru olduğundan emin olun
-      final rootElements = document.findAllElements('node').toList();
-      return rootElements.map((e) => XmlModel.fromXml(e)).toList();
+      var source = treeJson;
+      if (source.trim().isEmpty) {
+        final getSession = getIt<GetSessionUseCase>();
+        final session = await getSession();
+        var cached = session?.treeJson ?? '';
+        if (cached.isEmpty) {
+          final username = session?.username ?? users;
+          final password = session?.password ?? pass;
+          if (username.isNotEmpty && password.isNotEmpty) {
+            await OrganizationService().fetchOrganizations(username, password);
+            cached = treeJson;
+          }
+        }
+        if (cached.isNotEmpty) {
+          treeJson = cached;
+          source = cached;
+        }
+      }
+      return TreeNode.parseTreeNodes(source);
     } catch (e) {
-      log("XML parse hatası: $e");
-      throw Exception("XML verisi parse edilemedi.");
+      log("Tree parse hatası: $e");
+      throw Exception("Tree verisi parse edilemedi.");
     }
   }
 
-  void _parseOrganization(XmlModel organizationNode) {
+  void _parseOrganization(TreeNode organizationNode) {
     for (var child in organizationNode.children) {
-      if (child.classType == 'obm_organization') {
+      final normalizedCaption = child.caption.trim();
+      final normalizedClass = child.classType.trim();
+      if (normalizedClass == 'obm_organization') {
         _parseOrganization(child); // Alt organizasyonları gez
       }
 
-      if (child.classType == 'obm_device') {
-        switch (child.caption) {
+      if (normalizedClass == 'obm_device') {
+        switch (normalizedCaption) {
           case 'Fabrika Toplam Tüketim':
             totalTuketimId = child.id;
             break;
@@ -149,21 +169,21 @@ class _EnerjiWidgetState extends State<EnerjiWidget> {
             gesfarkId = child.id;
             break;
         }
-      } else if (child.classType == 'obm_organization' &&
-          child.caption == 'Doğalgaz') {
+      } else if (normalizedClass == 'obm_organization' &&
+          normalizedCaption == 'Doğalgaz') {
         dogalgazTuketimId = child.id;
         dogalgazDeviceId ??= _findFirstDevice(child);
-      } else if (child.classType == 'obm_organization' &&
-          child.caption == 'GES') {
+      } else if (normalizedClass == 'obm_organization' &&
+          normalizedCaption == 'GES') {
         gesId = child.id;
-      } else if (child.classType == 'obm_organization' &&
-          child.caption == 'Su') {
+      } else if (normalizedClass == 'obm_organization' &&
+          normalizedCaption == 'Su') {
         suTuketimId = child.id;
-      } else if (child.classType == 'obm_organization' &&
-          child.caption == 'Buhar') {
+      } else if (normalizedClass == 'obm_organization' &&
+          normalizedCaption == 'Buhar') {
         buharTuketimId = child.id;
-      } else if (child.classType == 'obm_organization' &&
-          child.caption == 'Elektrik Ana Tüketim') {
+      } else if (normalizedClass == 'obm_organization' &&
+          normalizedCaption == 'Elektrik Ana Tüketim') {
         energyId = child.id;
       }
     }
@@ -266,9 +286,9 @@ class _EnerjiWidgetState extends State<EnerjiWidget> {
     }
   }
 
-  String? _findFirstDevice(XmlModel node) {
+  String? _findFirstDevice(TreeNode node) {
     for (final child in node.children) {
-      if (child.classType == 'obm_device' && child.id.isNotEmpty) {
+      if (child.classType.trim() == 'obm_device' && child.id.isNotEmpty) {
         return child.id;
       }
       final nested = _findFirstDevice(child);

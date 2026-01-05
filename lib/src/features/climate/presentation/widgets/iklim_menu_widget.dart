@@ -5,18 +5,18 @@ import 'package:controlapp/src/features/presentation/home/view_model/home_cubit.
 
 import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
-import 'package:controlapp/data/xmlModel.dart';
-import 'package:controlapp/src/features/climate/presentation/widgets/climate_xml_list_screen.dart';
+import 'package:controlapp/data/tree_node.dart';
+import 'package:controlapp/src/features/climate/presentation/widgets/climate_tree_list_screen.dart';
 
 class IklimMenuWidget extends StatelessWidget {
   const IklimMenuWidget({
     super.key,
     required this.organisation,
-    required this.loadAndParseXml,
+    required this.loadAndParseTree,
   });
 
   final String organisation;
-  final Future<List<XmlModel>> Function() loadAndParseXml;
+  final Future<List<TreeNode>> Function() loadAndParseTree;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,8 @@ class IklimMenuWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        FutureBuilder<List<XmlModel>>(
-                          future: loadAndParseXml(),
+                        FutureBuilder<List<TreeNode>>(
+                          future: loadAndParseTree(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -78,15 +78,17 @@ class IklimMenuWidget extends StatelessWidget {
                               );
                             }
 
+                            final firmName =
+                                (userDataConst['firm_name']?.toString() ?? '')
+                                    .trim();
                             final root = nodes.firstWhere(
-                              (node) =>
-                                  node.caption == userDataConst['firm_name'],
-                              orElse: XmlModel.empty,
+                              (node) => node.caption.trim() == firmName,
+                              orElse: TreeNode.empty,
                             );
 
                             final organization = root.children.firstWhere(
-                              (child) => child.caption == organisation,
-                              orElse: XmlModel.empty,
+                              (child) => child.caption.trim() == organisation,
+                              orElse: TreeNode.empty,
                             );
 
                             final devices = _collectDevices(organization);
@@ -102,7 +104,7 @@ class IklimMenuWidget extends StatelessWidget {
                             return Flexible(
                               child: BlocProvider.value(
                                 value: homeCubit,
-                                child: ClimateXmlListScreen(
+                                child: ClimateTreeListScreen(
                                   nodes: devices,
                                 ),
                               ),
@@ -121,10 +123,10 @@ class IklimMenuWidget extends StatelessWidget {
     );
   }
 
-  List<XmlModel> _collectDevices(XmlModel root) {
-    final result = <XmlModel>[];
+  List<TreeNode> _collectDevices(TreeNode root) {
+    final result = <TreeNode>[];
 
-    void traverse(XmlModel node) {
+    void traverse(TreeNode node) {
       if (node.classType == 'obm_device') {
         result.add(node);
       }

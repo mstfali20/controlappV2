@@ -53,7 +53,7 @@ class HomeState extends Equatable {
     this.plcTitle,
     this.snapshot = const {},
     this.errorMessage,
-    this.treeXml,
+    this.treeJson,
     this.isFallbackToEnergy = false,
   });
 
@@ -68,7 +68,7 @@ class HomeState extends Equatable {
   final String? plcTitle;
   final Map<String, String> snapshot;
   final String? errorMessage;
-  final String? treeXml;
+  final String? treeJson;
   final bool isFallbackToEnergy;
 
   bool get isLoading => status == HomeStatus.loading;
@@ -85,7 +85,7 @@ class HomeState extends Equatable {
     String? plcTitle,
     Map<String, String>? snapshot,
     String? errorMessage,
-    String? treeXml,
+    String? treeJson,
     bool? isFallbackToEnergy,
     bool clearError = false,
   }) {
@@ -101,7 +101,7 @@ class HomeState extends Equatable {
       plcTitle: plcTitle ?? this.plcTitle,
       snapshot: snapshot ?? this.snapshot,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      treeXml: treeXml ?? this.treeXml,
+      treeJson: treeJson ?? this.treeJson,
       isFallbackToEnergy: isFallbackToEnergy ?? this.isFallbackToEnergy,
     );
   }
@@ -119,7 +119,7 @@ class HomeState extends Equatable {
         plcTitle,
         snapshot,
         errorMessage,
-        treeXml,
+        treeJson,
         isFallbackToEnergy,
       ];
 }

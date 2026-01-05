@@ -1,25 +1,25 @@
 import 'package:controlapp/const/Color.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:controlapp/src/features/presentation/home/view_model/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ClimateXmlListScreen extends StatefulWidget {
-  const ClimateXmlListScreen({
+class ClimateTreeListScreen extends StatefulWidget {
+  const ClimateTreeListScreen({
     super.key,
     required this.nodes,
     this.onDeviceSelected,
   });
 
-  final List<XmlModel> nodes;
+  final List<TreeNode> nodes;
   final VoidCallback? onDeviceSelected;
 
   @override
-  State<ClimateXmlListScreen> createState() => _ClimateXmlListScreenState();
+  State<ClimateTreeListScreen> createState() => _ClimateTreeListScreenState();
 }
 
-class _ClimateXmlListScreenState extends State<ClimateXmlListScreen> {
+class _ClimateTreeListScreenState extends State<ClimateTreeListScreen> {
   bool _isLoading = false;
 
   @override
@@ -52,7 +52,7 @@ class _ClimateXmlListScreenState extends State<ClimateXmlListScreen> {
     );
   }
 
-  Widget _buildNodeTile(BuildContext context, XmlModel node) {
+  Widget _buildNodeTile(BuildContext context, TreeNode node) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

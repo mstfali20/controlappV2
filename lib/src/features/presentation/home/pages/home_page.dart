@@ -100,9 +100,9 @@ class HomePage extends StatelessWidget {
                                 Visibility(
                                   visible:
                                       module == HomeCubit.climateModuleCaption,
-                                  // child: const IklimWidget(),
+                                  child: const IklimWidget(),
                                   // child: const KazanWidget(),
-                                  child: const WebKazanWidget(),
+                                  // child: const WebKazanWidget(),
                                 ),
                                 Visibility(
                                   visible:
@@ -161,14 +161,14 @@ class HomePage extends StatelessWidget {
                     visible: module == HomeCubit.energyModuleCaption,
                     child: EnerjiMenuWidget(
                       organisation: module,
-                      loadAndParseXml: context.read<HomeCubit>().loadTreeNodes,
+                      loadAndParseTree: context.read<HomeCubit>().loadTreeNodes,
                     ),
                   ),
                   Visibility(
                     visible: module == HomeCubit.climateModuleCaption,
                     child: IklimMenuWidget(
                       organisation: module,
-                      loadAndParseXml: context.read<HomeCubit>().loadTreeNodes,
+                      loadAndParseTree: context.read<HomeCubit>().loadTreeNodes,
                     ),
                   ),
                 ],

@@ -1,6 +1,6 @@
 import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'energy_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,17 +8,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:controlapp/src/core/di/injector.dart';
 import 'package:controlapp/src/features/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
 
-class XmlListScreen extends StatefulWidget {
-  final List<XmlModel> nodes;
+class TreeListScreen extends StatefulWidget {
+  final List<TreeNode> nodes;
 
-  const XmlListScreen({super.key, required this.nodes});
+  const TreeListScreen({super.key, required this.nodes});
 
   @override
   // ignore: library_private_types_in_public_api
-  _XmlListScreenState createState() => _XmlListScreenState();
+  _TreeListScreenState createState() => _TreeListScreenState();
 }
 
-class _XmlListScreenState extends State<XmlListScreen> {
+class _TreeListScreenState extends State<TreeListScreen> {
   String? username;
   String? password;
   bool _isLoading = false;
@@ -55,7 +55,7 @@ class _XmlListScreenState extends State<XmlListScreen> {
               itemCount: widget.nodes.length - 1,
               separatorBuilder: (context, index) => const SizedBox(width: 10),
               itemBuilder: (context, index) {
-                XmlModel node = widget.nodes[index + 1];
+                TreeNode node = widget.nodes[index + 1];
                 return _buildNodeTile(context, node);
               },
             ),
@@ -66,7 +66,7 @@ class _XmlListScreenState extends State<XmlListScreen> {
     );
   }
 
-  Widget _buildNodeTile(BuildContext context, XmlModel node) {
+  Widget _buildNodeTile(BuildContext context, TreeNode node) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,7 +111,7 @@ class _XmlListScreenState extends State<XmlListScreen> {
     );
   }
 
-  Future<bool> _fetchDataAndNavigate(XmlModel node) async {
+  Future<bool> _fetchDataAndNavigate(TreeNode node) async {
     final effectiveUsername = username ?? userDataConst['username']?.toString();
     final effectivePassword = password ?? userDataConst['password']?.toString();
 

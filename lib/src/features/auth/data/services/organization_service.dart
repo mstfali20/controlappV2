@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:controlapp/const/data.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:http/http.dart' as http;
-import 'package:xml/xml.dart' as xml;
 
 // Organization veri modelini tanımlıyoruz
 class OrganizationData {
@@ -17,27 +17,31 @@ class OrganizationData {
   }
 }
 
-void populateOrganizationsFromXml({String? xmlContent}) {
-  final source = xmlContent ?? xmlString;
+void populateOrganizationsFromTree({String? treeContent}) {
+  final source = treeContent ?? treeJson;
   if (source.isEmpty) {
     return;
   }
 
   try {
-    final document = xml.XmlDocument.parse(source);
-    final nodes = document.findAllElements('node');
+    final root = TreeNode.parseTree(source);
+    if (root == null) {
+      return;
+    }
+    final nodes = root.walk();
 
     organizationList.clear();
     altorganizationList.clear();
 
     for (final node in nodes) {
-      if (node.getAttribute('class') == 'obm_organization' &&
-          (node.getAttribute('caption') == enerjiIzlem ||
-              node.getAttribute('caption') == iklimlendirmeIzlem ||
-              node.getAttribute('caption') == boyahaneIzlem)) {
-        final id = node.getAttribute('id');
-        final caption = node.getAttribute('caption');
-        if (id != null && caption != null) {
+      final normalizedClass = node.classType.trim();
+      final caption = node.caption.trim();
+      if (normalizedClass == 'obm_organization' &&
+          (caption == enerjiIzlem ||
+              caption == iklimlendirmeIzlem ||
+              caption == boyahaneIzlem)) {
+        final id = node.id;
+        if (id.isNotEmpty && caption.isNotEmpty) {
           organizationList.add(OrganizationData(id, caption));
         }
       }
@@ -49,7 +53,7 @@ void populateOrganizationsFromXml({String? xmlContent}) {
 
 void ensureOrganizationsLoaded() {
   if (organizationList.isEmpty) {
-    populateOrganizationsFromXml();
+    populateOrganizationsFromTree();
   }
 }
 
@@ -57,12 +61,12 @@ class OrganizationService {
   Future<List<OrganizationData>> fetchOrganizations(
       String username, String password) async {
     organizationList.clear();
-    xmlString = '';
+    treeJson = '';
 
     try {
       var res = await http.get(
         Uri.parse(
-            "http://web.controlapp.net.tr/modules/energy_management/mobile/tree.php?username=$username&password=$password&l=tr_TR"),
+            "http://web.controlapp.net.tr/modules/energy_management/mobile/newtree.php?username=$username&password=$password&l=tr_TR"),
         headers: {
           HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded",
         },
@@ -71,24 +75,27 @@ class OrganizationService {
       log(password.toString());
 
       if (res.statusCode == 200) {
-        xmlString = res.body;
+        treeJson = res.body;
 
-        var document = xml.XmlDocument.parse(res.body);
-        var nodes = document.findAllElements('node');
+        final root = TreeNode.parseTree(res.body);
+        if (root == null) {
+          return [];
+        }
+        final nodes = root.walk();
 
         for (var node in nodes) {
-          if (node.getAttribute('class') == 'obm_organization' &&
-              (node.getAttribute('caption') == enerjiIzlem ||
-                  node.getAttribute('caption') == iklimlendirmeIzlem ||
-                  node.getAttribute('caption') == boyahaneIzlem)) {
-            var id = node.getAttribute('id');
-            var caption = node.getAttribute('caption');
+          final normalizedClass = node.classType.trim();
+          final caption = node.caption.trim();
+          if (normalizedClass == 'obm_organization' &&
+              (caption == enerjiIzlem ||
+                  caption == iklimlendirmeIzlem ||
+                  caption == boyahaneIzlem)) {
+            final id = node.id;
 
-            if (id != null && caption != null) {
+            if (id.isNotEmpty && caption.isNotEmpty) {
               // Altındaki 'obm_device' elemanlarını say
-              deviceCount = node
-                  .findElements('node')
-                  .where((child) => child.getAttribute('class') == 'obm_device')
+              deviceCount = node.children
+                  .where((child) => child.classType.trim() == 'obm_device')
                   .length;
 
               var organizationData = OrganizationData(id, caption);

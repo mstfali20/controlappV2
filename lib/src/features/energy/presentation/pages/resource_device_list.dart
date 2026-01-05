@@ -4,9 +4,9 @@ import 'package:controlapp/src/features/energy/presentation/pages/energy_chart_p
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:xml/xml.dart' as xml;
 
 import 'package:controlapp/const/data.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:controlapp/src/features/energy/presentation/widgets/custom_main_widget.dart';
 import 'package:controlapp/src/features/energy/domain/utils/energy_value_parser.dart';
 
@@ -119,13 +119,16 @@ class _ResourceDeviceListState extends State<ResourceDeviceList> {
     }
 
     try {
-      final document = xml.XmlDocument.parse(xmlString);
-      final target = document.findAllElements('node').firstWhere(
-            (element) => element.getAttribute('id') == nodeId,
-            orElse: () => xml.XmlElement(xml.XmlName('node')),
-          );
+      final root = TreeNode.parseTree(treeJson);
+      if (root == null) {
+        return const _DeviceLoadResult(
+          devices: [],
+          error: 'Kaynak verisi bulunamadı.',
+        );
+      }
 
-      if (target.getAttribute('id') != nodeId) {
+      final target = root.findById(nodeId);
+      if (target == null) {
         return const _DeviceLoadResult(
           devices: [],
           error: 'Seçili kaynağa ait cihaz bulunamadı.',
@@ -133,12 +136,11 @@ class _ResourceDeviceListState extends State<ResourceDeviceList> {
       }
 
       final devices = target.children
-          .whereType<xml.XmlElement>()
           .map(
-            (element) => _ResourceDevice(
-              id: element.getAttribute('id') ?? '',
-              caption: element.getAttribute('caption') ?? '',
-              category: element.getAttribute('category') ?? '',
+            (child) => _ResourceDevice(
+              id: child.id,
+              caption: child.caption,
+              category: child.category,
             ),
           )
           .where((device) => device.id.isNotEmpty && device.caption.isNotEmpty)

@@ -2,18 +2,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:controlapp/const/data.dart';
 import 'package:controlapp/const/Color.dart';
-import 'package:controlapp/data/xmlModel.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/detail/xml_list.dart';
+import 'package:controlapp/data/tree_node.dart';
+import 'package:controlapp/src/features/energy/presentation/pages/detail/tree_list.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EnerjiMenuWidget extends StatelessWidget {
   final String organisation;
-  final Future<List<XmlModel>> Function() loadAndParseXml;
+  final Future<List<TreeNode>> Function() loadAndParseTree;
 
   const EnerjiMenuWidget({
     super.key,
     required this.organisation,
-    required this.loadAndParseXml,
+    required this.loadAndParseTree,
   });
 
   @override
@@ -54,7 +54,7 @@ class EnerjiMenuWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         FutureBuilder(
-                          future: loadAndParseXml(),
+                          future: loadAndParseTree(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -67,31 +67,34 @@ class EnerjiMenuWidget extends StatelessWidget {
                                 child: Text('Hata: ${snapshot.error}'),
                               );
                             } else {
-                              List<XmlModel> nodes =
-                                  snapshot.data as List<XmlModel>;
+                              List<TreeNode> nodes =
+                                  snapshot.data as List<TreeNode>;
 
+                              final firmName =
+                                  (userDataConst["firm_name"]?.toString() ??
+                                          '')
+                                      .trim();
                               // "TanTekstil" düğümünü bulma
-                              XmlModel nodesName = nodes.firstWhere(
-                                (node) =>
-                                    node.caption == userDataConst["firm_name"],
-                                orElse: () => XmlModel
-                                    .empty(), // Burada boş bir XmlModel döndürmelisiniz
+                              TreeNode nodesName = nodes.firstWhere(
+                                (node) => node.caption.trim() == firmName,
+                                orElse: () => TreeNode
+                                    .empty(), // Burada boş bir TreeNode döndürmelisiniz
                               );
 
                               // Eğer "TanTekstil" bulunduysa, altındaki "Enerji İzleme Sistemi" düğümünü bul
-                              XmlModel organizizasyom =
+                              TreeNode organizizasyom =
                                   nodesName.children.firstWhere(
                                 (childNode) =>
-                                    childNode.caption == organisation,
-                                orElse: () => XmlModel
-                                    .empty(), // Burada da boş bir XmlModel döndürmelisiniz
+                                    childNode.caption.trim() == organisation,
+                                orElse: () => TreeNode
+                                    .empty(), // Burada da boş bir TreeNode döndürmelisiniz
                               );
 
                               // Eğer "Enerji İzleme Sistemi" düğümünü bulduysanız, onun altındaki düğümleri listeleyin
                               if (organizizasyom.children.isNotEmpty) {
                                 log(organisation.toString());
                                 return Flexible(
-                                  child: XmlListScreen(
+                                  child: TreeListScreen(
                                       nodes: organizizasyom.children),
                                 );
                               } else {

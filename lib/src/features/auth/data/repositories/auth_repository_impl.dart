@@ -102,10 +102,11 @@ class AuthRepositoryImpl implements AuthRepository {
       await _prefs.remove('token_expires_at');
     }
 
-    if (session.treeXml != null && session.treeXml!.isNotEmpty) {
-      await _prefs.setString('tree_xml', session.treeXml!);
-    } else {
+    if (session.treeJson != null && session.treeJson!.isNotEmpty) {
+      await _prefs.setString('tree_json', session.treeJson!);
       await _prefs.remove('tree_xml');
+    } else {
+      await _prefs.remove('tree_json');
     }
 
     await _prefs.setString('name', session.user.name);
@@ -200,7 +201,7 @@ class AuthRepositoryImpl implements AuthRepository {
       token: _prefs.getString('token'),
       tokenIssuedAt: _parseDateTime(_prefs.getString('token_issued_at')),
       tokenExpiresAt: _parseDateTime(_prefs.getString('token_expires_at')),
-      treeXml: _prefs.getString('tree_xml'),
+      treeJson: _prefs.getString('tree_json') ?? _prefs.getString('tree_xml'),
       extras: extras,
     );
   }
@@ -228,6 +229,7 @@ class AuthRepositoryImpl implements AuthRepository {
       'token',
       'token_issued_at',
       'token_expires_at',
+      'tree_json',
       'tree_xml',
     ]);
   }

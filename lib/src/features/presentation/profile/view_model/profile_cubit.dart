@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:controlapp/const/data.dart' as legacy_data;
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:controlapp/src/core/presentation/safe_cubit.dart';
+import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
 
 import '../../home/view_model/home_cubit.dart';
 import '../../home/view_model/home_state.dart';
@@ -13,6 +14,7 @@ class ProfileCubit extends SafeCubit<ProfileState> {
       : _homeCubit = homeCubit,
         super(ProfileState.fromHome(homeCubit.state)) {
     _subscription = _homeCubit.stream.listen(_onHomeStateChanged);
+    _ensureOrganizationsLoaded();
   }
 
   final HomeCubit _homeCubit;
@@ -32,13 +34,14 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         return;
       }
 
-      final firmName = _homeCubit.state.userSummary.firmName.isNotEmpty
-          ? _homeCubit.state.userSummary.firmName
-          : legacy_data.userDataConst['firm_name']?.toString() ?? '';
+      final firmName = (_homeCubit.state.userSummary.firmName.isNotEmpty
+              ? _homeCubit.state.userSummary.firmName
+              : legacy_data.userDataConst['firm_name']?.toString() ?? '')
+          .trim();
 
       final firmNode = nodes.firstWhere(
-        (node) => node.caption == firmName,
-        orElse: XmlModel.empty,
+        (node) => node.caption.trim() == firmName,
+        orElse: TreeNode.empty,
       );
 
       if (_isNodeEmpty(firmNode)) {
@@ -47,8 +50,8 @@ class ProfileCubit extends SafeCubit<ProfileState> {
       }
 
       final organizationNode = firmNode.children.firstWhere(
-        (child) => child.caption == caption,
-        orElse: XmlModel.empty,
+        (child) => child.caption.trim() == caption,
+        orElse: TreeNode.empty,
       );
 
       if (_isNodeEmpty(organizationNode)) {
@@ -58,7 +61,7 @@ class ProfileCubit extends SafeCubit<ProfileState> {
 
       final selectedDevice = organizationNode.children.firstWhere(
         (element) => element.classType == 'obm_device',
-        orElse: XmlModel.empty,
+        orElse: TreeNode.empty,
       );
 
       if (_isNodeEmpty(selectedDevice)) {
@@ -97,7 +100,7 @@ class ProfileCubit extends SafeCubit<ProfileState> {
     emit(state.copyWith(clearSnackbar: true));
   }
 
-  Future<List<XmlModel>> loadTreeNodes() {
+  Future<List<TreeNode>> loadTreeNodes() {
     return _homeCubit.loadTreeNodes();
   }
 
@@ -105,7 +108,35 @@ class ProfileCubit extends SafeCubit<ProfileState> {
     emit(ProfileState.fromHome(homeState, previous: state));
   }
 
-  bool _isNodeEmpty(XmlModel node) =>
+  void _ensureOrganizationsLoaded() {
+    if (legacy_data.organizationList.isNotEmpty) {
+      return;
+    }
+
+    if (legacy_data.treeJson.isNotEmpty) {
+      populateOrganizationsFromTree(treeContent: legacy_data.treeJson);
+      emit(state.copyWith(status: state.status));
+      return;
+    }
+
+    Future.microtask(() async {
+      final username = _homeCubit.state.username ??
+          legacy_data.userDataConst['username']?.toString() ??
+          '';
+      final password = _homeCubit.state.password ??
+          legacy_data.userDataConst['password']?.toString() ??
+          '';
+      if (username.isEmpty || password.isEmpty) {
+        return;
+      }
+
+      emit(state.copyWith(status: ProfileStatus.loading));
+      await OrganizationService().fetchOrganizations(username, password);
+      emit(state.copyWith(status: ProfileStatus.loaded));
+    });
+  }
+
+  bool _isNodeEmpty(TreeNode node) =>
       node.id.isEmpty && node.caption.isEmpty && node.children.isEmpty;
 
   ProfileState _failureState(String message) {

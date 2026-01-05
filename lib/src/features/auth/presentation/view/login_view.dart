@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
 import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:controlapp/src/features/presentation/navigation/pages/navigation_page.dart';
 import 'package:controlapp/src/features/presentation/register_page.dart';
 import 'package:controlapp/widget/square_box.dart';
@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:xml/xml.dart' as xml;
 import 'package:controlapp/l10n/app_localizations.dart';
 
 import '../../../../core/di/injector.dart';
@@ -664,10 +663,8 @@ class _LoginViewContentState extends State<_LoginViewContent> {
     );
   }
 
-  Future<List<XmlModel>> _loadAndParseXml() async {
-    final document = xml.XmlDocument.parse(xmlString);
-    final rootElements = document.findAllElements('node').toList();
-    return rootElements.map((e) => XmlModel.fromXml(e)).toList();
+  Future<List<TreeNode>> _loadAndParseTree() async {
+    return TreeNode.parseTreeNodes(treeJson);
   }
 
   Future<void> guncelleFunc(
@@ -679,37 +676,38 @@ class _LoginViewContentState extends State<_LoginViewContent> {
     final fetchUseCase = getIt<FetchEnergySnapshotUseCase>();
 
     try {
-      // XML verilerini yükle ve işle
-      List<XmlModel> nodes = await _loadAndParseXml();
+      // Tree verilerini yükle ve işle
+      List<TreeNode> nodes = await _loadAndParseTree();
 
+      final firmName = (userDataConst["firm_name"]?.toString() ?? '').trim();
       // "TanTekstil" düğümünü bulma
-      XmlModel nodesName = nodes.firstWhere(
-        (node) => node.caption == userDataConst["firm_name"],
+      TreeNode nodesName = nodes.firstWhere(
+        (node) => node.caption.trim() == firmName,
         orElse: () =>
-            XmlModel.empty(), // Burada boş bir XmlModel döndürmelisiniz
+            TreeNode.empty(), // Burada boş bir TreeNode döndürmelisiniz
       );
 
       // Eğer "TanTekstil" bulunduysa, altındaki "Enerji İzleme Sistemi" düğümünü bul
-      XmlModel organizizasyom = nodesName.children.firstWhere(
+      TreeNode organizizasyom = nodesName.children.firstWhere(
         (childNode) => childNode.caption == selectedSerialTitle,
         orElse: () =>
-            XmlModel.empty(), // Burada da boş bir XmlModel döndürmelisiniz
+            TreeNode.empty(), // Burada da boş bir TreeNode döndürmelisiniz
       );
 
       // Burada organizizasyom altında istediğiniz verilere erişebilirsiniz
-      if (organizizasyom != XmlModel.empty()) {
+      if (organizizasyom != TreeNode.empty()) {
         // Örneğin, organizizasyom'un altındaki verilere erişim
         // Varsayılan olarak, bir alt düğüm veya veri listesi varsa, onlara erişebilirsiniz.
-        List<XmlModel> altVeriler =
+        List<TreeNode> altVeriler =
             organizizasyom.children; // veya organizizasyom.data gibi
 
         if (altVeriler.isNotEmpty) {
           final ilkVeri = altVeriler.firstWhere(
             (node) => node.classType == 'obm_device',
-            orElse: XmlModel.empty,
+            orElse: TreeNode.empty,
           );
 
-          if (ilkVeri == XmlModel.empty()) {
+          if (ilkVeri == TreeNode.empty()) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(AppLocalizations.of(context)!.altVeriBulunamadi),
@@ -793,8 +791,8 @@ class _LoginViewContentState extends State<_LoginViewContent> {
                 selectedOrganizationId: ids.isNotEmpty
                     ? ids.first
                     : currentSession.selectedOrganizationId,
-                treeXml:
-                    xmlString.isNotEmpty ? xmlString : currentSession.treeXml,
+                treeJson:
+                    treeJson.isNotEmpty ? treeJson : currentSession.treeJson,
                 password: currentSession.password,
                 extras: {
                   ...currentSession.extras,

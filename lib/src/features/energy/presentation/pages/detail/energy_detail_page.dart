@@ -5,7 +5,7 @@ import 'package:controlapp/const/fade_zoom.dart';
 import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/scale_button.dart';
 import 'package:controlapp/src/features/energy/domain/utils/device_type_helper.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'energy_former_widget.dart';
 import 'energy_momentary_widget.dart';
 import 'energy_period_widget.dart';
@@ -22,7 +22,7 @@ class EnerjiDetail extends StatefulWidget {
     required this.title,
   });
 
-  final XmlModel data;
+  final TreeNode data;
   final String title;
 
   @override
@@ -357,8 +357,8 @@ class _EnerjiDetailState extends State<EnerjiDetail> {
                             .map((dataItem) {
                           return InkWell(
                             onTap: () {
-                              // Burada mevcut XmlModel verisini üst bir organizasyon düğümüne yerleştiriyoruz
-                              XmlModel organization = XmlModel(
+                              // Burada mevcut TreeNode verisini üst bir organizasyon düğümüne yerleştiriyoruz
+                              TreeNode organization = TreeNode(
                                 id: widget.title, // Organizasyonun ID'si
                                 caption:
                                     dataItem.caption, // Organizasyon başlığı

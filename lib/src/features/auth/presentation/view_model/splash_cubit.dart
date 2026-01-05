@@ -173,7 +173,7 @@ class SplashCubit extends SafeCubit<SplashState> {
       token: refreshed.token ?? original.token,
       tokenIssuedAt: refreshed.tokenIssuedAt ?? original.tokenIssuedAt,
       tokenExpiresAt: refreshed.tokenExpiresAt ?? original.tokenExpiresAt,
-      treeXml: original.treeXml ?? refreshed.treeXml,
+      treeJson: original.treeJson ?? refreshed.treeJson,
     );
   }
 
@@ -205,8 +205,8 @@ class SplashCubit extends SafeCubit<SplashState> {
     if (session.selectedOrganizationId != null) {
       legacy_data.organizationid = session.selectedOrganizationId!;
     }
-    if (session.treeXml != null) {
-      legacy_data.xmlString = session.treeXml!;
+    if (session.treeJson != null) {
+      legacy_data.treeJson = session.treeJson!;
     }
     if (session.extras['selected_module'] is String) {
       legacy_data.selectedModule = session.extras['selected_module'];

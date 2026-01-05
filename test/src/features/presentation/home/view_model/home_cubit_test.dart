@@ -69,7 +69,7 @@ void main() {
     legacy_data.serialTitle = '';
     legacy_data.plcTitle = '';
     legacy_data.selectedModule = energyModule;
-    legacy_data.xmlString = '';
+    legacy_data.treeJson = '';
     legacy_data.anaAnlikVeriMap.clear();
   });
 

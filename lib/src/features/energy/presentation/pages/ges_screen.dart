@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:controlapp/src/core/di/injector.dart';
 import 'package:controlapp/src/features/energy/domain/utils/currency_formatter.dart';
 import 'package:controlapp/src/features/energy/presentation/view_model/ges_consumption_cubit.dart';
@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:controlapp/l10n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:xml/xml.dart' as xml;
 
 const List<String> _kGesAllowedCaptionOrder = [
   'çatı ges toplam',
@@ -64,8 +63,8 @@ class _GesScrenState extends State<GesScren> {
   late final GesConsumptionCubit _consumptionCubit;
 
   bool _isLoadingDevices = true;
-  List<XmlModel> _displayDevices = const [];
-  List<XmlModel> _primaryDevices = const [];
+  List<TreeNode> _displayDevices = const [];
+  List<TreeNode> _primaryDevices = const [];
   Set<String> _primaryCaptions = const {};
   String? _deviceError;
 
@@ -93,7 +92,7 @@ class _GesScrenState extends State<GesScren> {
     try {
       final node = await _getGesNodeById(widget.gesid);
       if (node != null) {
-        final devices = List<XmlModel>.from(node.children);
+        final devices = List<TreeNode>.from(node.children);
         final selection = _selectDevices(devices);
         final filteredDevices = _orderAllowedDevices(selection.primaryDevices);
         final primaryDevices = filteredDevices.isNotEmpty
@@ -101,8 +100,8 @@ class _GesScrenState extends State<GesScren> {
             : selection.primaryDevices;
         setState(() {
           _displayDevices =
-              List<XmlModel>.unmodifiable(selection.displayDevices);
-          _primaryDevices = List<XmlModel>.unmodifiable(primaryDevices);
+              List<TreeNode>.unmodifiable(selection.displayDevices);
+          _primaryDevices = List<TreeNode>.unmodifiable(primaryDevices);
           _primaryCaptions =
               primaryDevices.map((device) => device.caption.trim()).toSet();
         });
@@ -146,26 +145,29 @@ class _GesScrenState extends State<GesScren> {
     );
   }
 
-  Future<XmlModel?> _getGesNodeById(String? gesId) async {
+  Future<TreeNode?> _getGesNodeById(String? gesId) async {
     if (gesId == null || gesId.isEmpty) {
       return null;
     }
-    final document = xml.XmlDocument.parse(xmlString);
-    final nodes =
-        document.findAllElements('node').map(XmlModel.fromXml).toList();
+    final root = TreeNode.parseTree(treeJson);
+    if (root == null) {
+      return null;
+    }
+    final nodes = root.walk().toList();
 
     try {
+      final firmName = (userDataConst['firm_name']?.toString() ?? '').trim();
       final firmNode = nodes.firstWhere(
-        (node) => node.caption == userDataConst['firm_name'],
-        orElse: () => XmlModel.empty(),
+        (node) => node.caption.trim() == firmName,
+        orElse: () => TreeNode.empty(),
       );
       final enerjiNode = firmNode.children.firstWhere(
-        (node) => node.caption == enerjiIzlem,
-        orElse: () => XmlModel.empty(),
+        (node) => node.caption.trim() == enerjiIzlem,
+        orElse: () => TreeNode.empty(),
       );
       final gesNode = enerjiNode.children.firstWhere(
         (node) => node.id == gesId,
-        orElse: () => XmlModel.empty(),
+        orElse: () => TreeNode.empty(),
       );
       return gesNode.id.isEmpty ? null : gesNode;
     } catch (_) {
@@ -173,8 +175,8 @@ class _GesScrenState extends State<GesScren> {
     }
   }
 
-  List<XmlModel> _orderAllowedDevices(Iterable<XmlModel> devices) {
-    final mapped = <String, XmlModel>{};
+  List<TreeNode> _orderAllowedDevices(Iterable<TreeNode> devices) {
+    final mapped = <String, TreeNode>{};
     for (final device in devices) {
       final key = _captionKey(device.caption);
       if (_kGesAllowedCaptionSet.contains(key) && !mapped.containsKey(key)) {
@@ -182,7 +184,7 @@ class _GesScrenState extends State<GesScren> {
       }
     }
 
-    final ordered = <XmlModel>[];
+    final ordered = <TreeNode>[];
     for (final allowed in _kGesAllowedCaptionOrder) {
       final match = mapped[allowed];
       if (match != null) {
@@ -192,13 +194,13 @@ class _GesScrenState extends State<GesScren> {
     return ordered;
   }
 
-  _DeviceSelection _selectDevices(List<XmlModel> devices) {
-    final sorted = List<XmlModel>.from(devices)
+  _DeviceSelection _selectDevices(List<TreeNode> devices) {
+    final sorted = List<TreeNode>.from(devices)
       ..sort((a, b) => a.caption.compareTo(b.caption));
 
-    XmlModel? overallTotal;
-    final totals = <XmlModel>[];
-    final singles = <XmlModel>[];
+    TreeNode? overallTotal;
+    final totals = <TreeNode>[];
+    final singles = <TreeNode>[];
 
     for (final device in sorted) {
       final caption = device.caption.trim();
@@ -226,8 +228,8 @@ class _GesScrenState extends State<GesScren> {
 
     if (totals.isEmpty && singles.isEmpty) {
       return _DeviceSelection(
-        displayDevices: List<XmlModel>.unmodifiable(sorted),
-        primaryDevices: List<XmlModel>.unmodifiable(sorted),
+        displayDevices: List<TreeNode>.unmodifiable(sorted),
+        primaryDevices: List<TreeNode>.unmodifiable(sorted),
         primaryCaptions: Set<String>.unmodifiable(
           sorted.map((device) => device.caption.trim()),
         ),
@@ -237,16 +239,16 @@ class _GesScrenState extends State<GesScren> {
     totals.sort((a, b) => a.caption.compareTo(b.caption));
     singles.sort((a, b) => a.caption.compareTo(b.caption));
 
-    final primaryCandidates = <XmlModel>[...totals, ...singles];
+    final primaryCandidates = <TreeNode>[...totals, ...singles];
     final seenCaptions = <String>{};
-    final primaryDevices = <XmlModel>[];
+    final primaryDevices = <TreeNode>[];
     for (final device in primaryCandidates) {
       final key = device.caption.toLowerCase();
       if (seenCaptions.add(key)) {
         primaryDevices.add(device);
       }
     }
-    final displayDevices = <XmlModel>[];
+    final displayDevices = <TreeNode>[];
     final seenIds = <String>{};
     if (overallTotal != null) {
       displayDevices.add(overallTotal);
@@ -263,8 +265,8 @@ class _GesScrenState extends State<GesScren> {
     }
 
     return _DeviceSelection(
-      displayDevices: List<XmlModel>.unmodifiable(displayDevices),
-      primaryDevices: List<XmlModel>.unmodifiable(primaryDevices),
+      displayDevices: List<TreeNode>.unmodifiable(displayDevices),
+      primaryDevices: List<TreeNode>.unmodifiable(primaryDevices),
       primaryCaptions: Set<String>.unmodifiable(
         primaryDevices.map((device) => device.caption.trim()),
       ),
@@ -378,8 +380,8 @@ class _DeviceSelection {
     required this.primaryCaptions,
   });
 
-  final List<XmlModel> displayDevices;
-  final List<XmlModel> primaryDevices;
+  final List<TreeNode> displayDevices;
+  final List<TreeNode> primaryDevices;
   final Set<String> primaryCaptions;
 }
 

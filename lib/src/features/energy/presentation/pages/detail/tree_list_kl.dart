@@ -1,6 +1,6 @@
 import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,22 +9,22 @@ import 'package:controlapp/src/features/auth/domain/usecases/get_session_usecase
 import 'package:controlapp/src/features/auth/domain/usecases/save_session_usecase.dart';
 import 'package:controlapp/src/features/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
 
-class XmlListKlScreen extends StatefulWidget {
-  final List<XmlModel> nodes;
+class TreeListKlScreen extends StatefulWidget {
+  final List<TreeNode> nodes;
 
   final void Function(int) callback;
 
-  const XmlListKlScreen({
+  const TreeListKlScreen({
     super.key,
     required this.nodes,
     required this.callback,
   });
 
   @override
-  _XmlListKlScreenState createState() => _XmlListKlScreenState();
+  _TreeListKlScreenState createState() => _TreeListKlScreenState();
 }
 
-class _XmlListKlScreenState extends State<XmlListKlScreen> {
+class _TreeListKlScreenState extends State<TreeListKlScreen> {
   @override
   void initState() {
     super.initState();
@@ -162,7 +162,7 @@ class _XmlListKlScreenState extends State<XmlListKlScreen> {
           itemCount: widget.nodes.length,
           separatorBuilder: (context, index) => const SizedBox(width: 10),
           itemBuilder: (context, index) {
-            XmlModel node = widget.nodes[index];
+            TreeNode node = widget.nodes[index];
             return _buildNodeTile(context, node);
           },
         ),
@@ -170,7 +170,7 @@ class _XmlListKlScreenState extends State<XmlListKlScreen> {
     );
   }
 
-  Widget _buildNodeTile(BuildContext context, XmlModel node) {
+  Widget _buildNodeTile(BuildContext context, TreeNode node) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

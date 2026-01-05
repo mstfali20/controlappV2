@@ -9,7 +9,7 @@ class UpdateSessionSelectionParams {
     this.plcTitle,
     this.selectedModule,
     this.selectedOrganizationId,
-    this.treeXml,
+    this.treeJson,
     this.extras,
   });
 
@@ -18,7 +18,7 @@ class UpdateSessionSelectionParams {
   final String? plcTitle;
   final String? selectedModule;
   final String? selectedOrganizationId;
-  final String? treeXml;
+  final String? treeJson;
   final Map<String, dynamic>? extras;
 }
 
@@ -54,7 +54,7 @@ class UpdateSessionSelectionUseCase {
       plcTitle: params.plcTitle ?? current.plcTitle,
       selectedOrganizationId:
           params.selectedOrganizationId ?? current.selectedOrganizationId,
-      treeXml: params.treeXml ?? current.treeXml,
+      treeJson: params.treeJson ?? current.treeJson,
       extras: mergedExtras,
     );
 

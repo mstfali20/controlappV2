@@ -12,7 +12,7 @@ class ProfileState extends Equatable {
     this.selectedDeviceTitle,
     this.selectedDeviceId,
     this.plcTitle,
-    this.treeXml,
+    this.treeJson,
     this.errorMessage,
     this.snackbarMessage,
   });
@@ -23,7 +23,7 @@ class ProfileState extends Equatable {
   final String? selectedDeviceTitle;
   final String? selectedDeviceId;
   final String? plcTitle;
-  final String? treeXml;
+  final String? treeJson;
   final String? errorMessage;
   final String? snackbarMessage;
 
@@ -36,7 +36,7 @@ class ProfileState extends Equatable {
     String? selectedDeviceTitle,
     String? selectedDeviceId,
     String? plcTitle,
-    String? treeXml,
+    String? treeJson,
     String? errorMessage,
     String? snackbarMessage,
     bool clearError = false,
@@ -49,7 +49,7 @@ class ProfileState extends Equatable {
       selectedDeviceTitle: selectedDeviceTitle ?? this.selectedDeviceTitle,
       selectedDeviceId: selectedDeviceId ?? this.selectedDeviceId,
       plcTitle: plcTitle ?? this.plcTitle,
-      treeXml: treeXml ?? this.treeXml,
+      treeJson: treeJson ?? this.treeJson,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       snackbarMessage:
           clearSnackbar ? null : (snackbarMessage ?? this.snackbarMessage),
@@ -67,7 +67,7 @@ class ProfileState extends Equatable {
       selectedDeviceTitle: state.selectedDeviceTitle,
       selectedDeviceId: state.selectedDeviceId,
       plcTitle: state.plcTitle,
-      treeXml: state.treeXml,
+      treeJson: state.treeJson,
       errorMessage: state.errorMessage,
       snackbarMessage: previous?.snackbarMessage,
     );
@@ -94,7 +94,7 @@ class ProfileState extends Equatable {
         selectedDeviceTitle,
         selectedDeviceId,
         plcTitle,
-        treeXml,
+        treeJson,
         errorMessage,
         snackbarMessage,
       ];

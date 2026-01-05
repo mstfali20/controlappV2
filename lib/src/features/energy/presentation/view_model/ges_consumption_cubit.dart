@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:collection/collection.dart';
 import 'package:controlapp/src/core/presentation/safe_cubit.dart';
 
-import 'package:controlapp/data/xmlModel.dart';
+import 'package:controlapp/data/tree_node.dart';
 
 import '../../domain/usecases/fetch_energy_consumption_usecase.dart';
 import '../../domain/utils/energy_value_parser.dart';
@@ -22,7 +22,7 @@ class GesConsumptionCubit extends SafeCubit<GesConsumptionState> {
   Future<void> load({
     required String username,
     required String password,
-    List<XmlModel> devices = const [],
+    List<TreeNode> devices = const [],
     required String periodType,
     required String type,
     required String totalCheckPt,

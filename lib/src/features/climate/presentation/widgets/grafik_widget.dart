@@ -134,7 +134,7 @@ class _GrafikWidgetState extends State<GrafikWidget> {
     }
 
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: text,
     );
   }

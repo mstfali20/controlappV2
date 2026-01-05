@@ -90,7 +90,7 @@ class _ControllerWidgatState extends State<ControllerWidgat> {
                 useMaterial3: true,
                 fontFamily: GoogleFonts.nunito().fontFamily,
               ),
-              home: const SplashView(),
+              home: SplashView(),
             );
           },
         );

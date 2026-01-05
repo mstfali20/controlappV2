@@ -1,0 +1,18 @@
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/SwiftHeaderWorkaround.swift":
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/SwiftHeaderWorkaround.o"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/SwiftHeaderWorkaround.dia"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/SwiftHeaderWorkaround.swiftconstvalues"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/SwiftHeaderWorkaround.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/SwiftHeaderWorkaround.swiftdeps"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/Timestamp+Codable.swift":
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/Timestamp+Codable.dia"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/Timestamp+Codable.swiftdeps"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/Timestamp+Codable.d"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/Timestamp+Codable.o"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/Timestamp+Codable.swiftconstvalues"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/ServerTimestamp.swift":
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/ServerTimestamp.swiftconstvalues"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/ServerTimestamp.o"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/ServerTimestamp.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/ServerTimestamp.swiftdeps"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/ServerTimestamp.dia"

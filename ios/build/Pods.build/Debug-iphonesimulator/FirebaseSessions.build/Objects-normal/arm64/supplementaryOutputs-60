@@ -1,0 +1,18 @@
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseSessions/FirebaseSessions/Sources/SessionGenerator.swift":
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionGenerator.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionGenerator.swiftdeps"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionGenerator.o"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionGenerator.swiftconstvalues"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionGenerator.dia"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseSessions/FirebaseSessions/Sources/SessionInitiator.swift":
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionInitiator.o"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionInitiator.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionInitiator.swiftdeps"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionInitiator.dia"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionInitiator.swiftconstvalues"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseSessions/FirebaseSessions/Sources/Public/SessionsDependencies.swift":
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionsDependencies.dia"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionsDependencies.o"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionsDependencies.swiftconstvalues"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionsDependencies.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/arm64/SessionsDependencies.swiftdeps"

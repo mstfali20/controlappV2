@@ -1,0 +1,18 @@
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseSessions/FirebaseSessions/Sources/SessionCoordinator.swift":
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SessionCoordinator.swiftconstvalues"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SessionCoordinator.o"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SessionCoordinator.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SessionCoordinator.swiftdeps"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SessionCoordinator.dia"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseSessions/FirebaseSessions/Sources/Settings/SDKDefaultSettings.swift":
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SDKDefaultSettings.o"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SDKDefaultSettings.dia"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SDKDefaultSettings.swiftconstvalues"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SDKDefaultSettings.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/SDKDefaultSettings.swiftdeps"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseSessions/FirebaseSessions/Sources/Settings/RemoteSettings.swift":
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/RemoteSettings.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/RemoteSettings.swiftdeps"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/RemoteSettings.dia"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/RemoteSettings.o"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseSessions.build/Objects-normal/x86_64/RemoteSettings.swiftconstvalues"

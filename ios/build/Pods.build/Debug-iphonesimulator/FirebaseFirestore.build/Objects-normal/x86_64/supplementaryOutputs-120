@@ -1,0 +1,24 @@
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/CodableErrors.swift":
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodableErrors.o"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodableErrors.swiftdeps"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodableErrors.d"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodableErrors.swiftconstvalues"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodableErrors.dia"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/CollectionReference+WriteEncodable.swift":
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+WriteEncodable.d"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+WriteEncodable.swiftdeps"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+WriteEncodable.o"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+WriteEncodable.swiftconstvalues"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+WriteEncodable.dia"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/CodablePassThroughTypes.swift":
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodablePassThroughTypes.dia"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodablePassThroughTypes.o"
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodablePassThroughTypes.d"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodablePassThroughTypes.swiftconstvalues"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CodablePassThroughTypes.swiftdeps"
+"/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/AsyncAwait/CollectionReference+AsyncAwait.swift":
+  dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+AsyncAwait.d"
+  const-values: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+AsyncAwait.swiftconstvalues"
+  object: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+AsyncAwait.o"
+  swift-dependencies: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+AsyncAwait.swiftdeps"
+  diagnostics: "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseFirestore.build/Objects-normal/x86_64/CollectionReference+AsyncAwait.dia"

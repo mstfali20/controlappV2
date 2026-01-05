@@ -1,0 +1,68 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfig-master.dia",
+    "emit-module-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfig-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfig-master-emit-module.dia",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfig-master.swiftdeps"
+  },
+  "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseRemoteConfig/FirebaseRemoteConfig/Swift/Codable.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Codable~partial.swiftmodule"
+  },
+  "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseRemoteConfig/FirebaseRemoteConfig/Swift/FirebaseRemoteConfigValueDecoderHelper.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/FirebaseRemoteConfigValueDecoderHelper~partial.swiftmodule"
+  },
+  "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseRemoteConfig/FirebaseRemoteConfig/Swift/PropertyWrapper/RemoteConfigProperty.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigProperty~partial.swiftmodule"
+  },
+  "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseRemoteConfig/FirebaseRemoteConfig/Swift/PropertyWrapper/RemoteConfigValueObservable.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/RemoteConfigValueObservable~partial.swiftmodule"
+  },
+  "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseRemoteConfig/FirebaseRemoteConfig/Swift/SPMSwiftHeaderWorkaround.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/SPMSwiftHeaderWorkaround~partial.swiftmodule"
+  },
+  "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/Pods/FirebaseRemoteConfig/FirebaseRemoteConfig/Swift/Value.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/FirebaseRemoteConfig.build/Objects-normal/arm64/Value~partial.swiftmodule"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/flutter_email_sender-master.dia",
+    "emit-module-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/flutter_email_sender-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/flutter_email_sender-master-emit-module.dia",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/flutter_email_sender-master.swiftdeps"
+  },
+  "/Users/mustafaalikilci/.pub-cache/hosted/pub.dev/flutter_email_sender-6.0.3/ios/Classes/SwiftFlutterEmailSenderPlugin.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/flutter_email_sender.build/Objects-normal/arm64/SwiftFlutterEmailSenderPlugin~partial.swiftmodule"
+  }
+}

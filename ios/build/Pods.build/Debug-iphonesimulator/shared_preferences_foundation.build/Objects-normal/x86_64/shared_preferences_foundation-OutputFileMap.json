@@ -1,0 +1,28 @@
+{
+  "" : {
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/shared_preferences_foundation-master.dia",
+    "emit-module-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/shared_preferences_foundation-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/shared_preferences_foundation-master-emit-module.dia",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/shared_preferences_foundation-master.swiftdeps"
+  },
+  "/Users/mustafaalikilci/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.3/darwin/shared_preferences_foundation/Sources/shared_preferences_foundation/SharedPreferencesPlugin.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/SharedPreferencesPlugin~partial.swiftmodule"
+  },
+  "/Users/mustafaalikilci/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.3/darwin/shared_preferences_foundation/Sources/shared_preferences_foundation/messages.g.swift" : {
+    "const-values" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.swiftconstvalues",
+    "dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.d",
+    "diagnostics" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.o",
+    "llvm-bc" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.bc",
+    "object" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.o",
+    "swift-dependencies" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g.swiftdeps",
+    "swiftmodule" : "/Users/mustafaalikilci/flutterProjeleri/ControlApp/controlapp/ios/build/Pods.build/Debug-iphonesimulator/shared_preferences_foundation.build/Objects-normal/x86_64/messages.g~partial.swiftmodule"
+  }
+}

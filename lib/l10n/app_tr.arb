@@ -1,0 +1,632 @@
+{
+	"language": "Türkçe",
+	"@language": {
+		"description": "aciklama"
+	},
+	"dil": "tr_TR",
+	"@dil": {
+		"description": "tr_TR"
+	},
+	"giris": "Giris",
+	"@giris":{
+		"description":"acıklama"
+	},
+	"hosgeldiniz": "Hoşgeldiniz! Lütfen bilgilerinizi giriniz.",
+	"@hosgeldiniz": {
+		"description": "aciklama"
+	},
+	"kullaniciAdi": "Kullanıcı Adı",
+	"@kullaniciAdi": {
+		"description": "aciklama"
+	},
+	"sifre": "Şifre",
+	"@sifre": {
+		"description": "aciklama"
+	},
+	"bilgileriKaydet": "Bilgileri Kaydet",
+	"@bilgileriKaydet": {
+		"description": "aciklama"
+	},
+	"sosyalMedya": "Sosyal Medya Ve Satış Hesaplarımız",
+	"@sosyalMedya": {
+		"description": "aciklama"
+	},
+	"demoIste": "Demo İste",
+	"@demoIste": {
+		"description": "aciklama"
+	},
+	"modulSec": "Modül Seçin",
+	"@modulSec": {
+		"description": "aciklama"
+	},
+	"girisBasarisiz": "Giriş başarısız. Hata Mesajı",
+	"@girisBasarisiz": {
+		"description": "aciklama"
+	},
+	"girisHata": "Giriş sırasında bir hata oluştu.",
+	"@girisHata": {
+		"description": "aciklama"
+	},
+	"sunucuHata": "Sunucu Hatası",
+	"@sunucuHata": {
+		"description": "aciklama"
+	},
+	"tekrarDene": "Tekrar Dene",
+	"@tekrarDene": {
+		"description": "aciklama"
+	},
+	"veriHata": "Anlık veri alınırken hata:",
+	"@veriHata": {
+		"description": "aciklama"
+	},
+	"altVeriBulunamadi": "Alt veri bulunamadı",
+	"@altVeriBulunamadi": {
+		"description": "aciklama"
+	},
+	"enerjiIzlemeBulunamadi": "Enerji İzleme Sistemi bulunamadı",
+	"@enerjiIzlemeBulunamadi": {
+		"description": "aciklama"
+	},
+	"beklenmedikHata": "Beklenmedik bir hata oluştu",
+	"@beklenmedikHata": {
+		"description": "aciklama"
+	},
+	"guncellemeBasarili": "Güncelleme Başarılı.",
+	"@guncellemeBasarili": {
+		"description": "aciklama"
+	},
+	"guncellemeBasarisiz": "Güncelleme başarısız. Hata kodu",
+	"@guncellemeBasarisiz": {
+		"description": "aciklama"
+	},
+	"enerjiIzlemeSistemi": "Enerji İzleme Sistemi",
+	"@enerjiIzlemeSistemi": {
+		"description": "aciklama"
+	},
+	"dugumBulunamadi": "Enerji İzleme Sistemi düğümünün altındaki düğümler bulunamadı.",
+	"@dugumBulunamadi": {
+		"description": "aciklama"
+	},
+	"modulYok": "Seçilecek Modül Yok",
+	"@modulYok": {
+		"description": "aciklama"
+	},
+	"tamam": "Tamam",
+	"@tamam": {
+		"description": "aciklama"
+	},
+	"bekleyin": "Kullanıcı adı ve şifre yükleniyor, lütfen bekleyin.",
+	"@bekleyin": {
+		"description": "aciklama"
+	},
+	"veriAlmaHata": "Veriler alınırken hata oluştu.",
+	"@veriAlmaHata": {
+		"description": "aciklama"
+	},
+  	"filitreindex": "Endeks Doğrulama",
+	"@filitreindex": {
+		"description": "Endeks Doğrulama"
+	},
+	"bildirimler": "Bildirimler",
+	"@bildirimler": {
+		"description": "aciklama"
+	},
+	"henuzBildirimYok": "Henüz bildirim yok",
+	"@henuzBildirimYok": {
+		"description": "aciklama"
+	},
+	"salon": "Salon",
+	"@salon": {
+		"description": "aciklama"
+	},
+	"havuz": "Havuz",
+	"@havuz": {
+		"description": "aciklama"
+	},
+	"damper": "Damper",
+	"@damper": {
+		"description": "aciklama"
+	},
+	"tuketim": "Tüketim",
+	"@tuketim": {
+		"description": "aciklama"
+	},
+	"filtreFarkBasinc": "Filtre Fark Basınç",
+	"@filtreFarkBasinc": {
+		"description": "aciklama"
+	},
+	"webSayfalari": "Web Sayfaları",
+	"@webSayfalari": {
+		"description": "aciklama"
+	},
+	"dilAyar": "Dil Ayarları",
+	"@dilAyar": {
+		"description": "aciklama"
+	},
+	"profilBilgisi": "Profil Bilgisi",
+	"@profilBilgisi": {
+		"description": "aciklama"
+	},
+	"iletisimBilgisi": "İletişim Bilgisi",
+	"@iletisimBilgisi": {
+		"description": "aciklama"
+	},
+	"sunucuHatasiBekleyin": "Sunucu hatası, lütfen bekleyin",
+	"@sunucuHatasiBekleyin": {
+		"description": "aciklama"
+	},
+	"icOrtam": "İç Ortam",
+	"@icOrtam": {
+		"description": "aciklama"
+	},
+	"nem": "Nem",
+	"@nem": {
+		"description": "aciklama"
+	},
+	"disOrtam": "Dış Ortam",
+	"@disOrtam": {
+		"description": "aciklama"
+	},
+	"sicaklik": "Sıcaklık",
+	"@sicaklik": {
+		"description": "aciklama"
+	},
+	"tuketimVerileri": "Tüketim Verileri",
+	"@tuketimVerileri": {
+		"description": "aciklama"
+	},
+	"guc": "Güç",
+	"@guc": {
+		"description": "aciklama"
+	},
+	"akim": "Akım",
+	"@akim": {
+		"description": "aciklama"
+	},
+	"salonVerileri": "Salon Verileri",
+	"@salonVerileri": {
+		"description": "aciklama"
+	},
+	"kategori": "Kategori",
+	"@kategori": {
+		"description": "aciklama"
+	},
+	"oncekiPeriyot": "Önceki Periyot",
+	"@oncekiPeriyot": {
+		"description": "aciklama"
+	},
+	"donemIci": "Dönem İçi",
+	"@donemIci": {
+		"description": "aciklama"
+	},
+	"anlik": "Anlık",
+	"@anlik": {
+		"description": "aciklama"
+	},
+	"gesUretim": "GES Üretim",
+	"@gesUretim": {
+		"description": "aciklama"
+	},
+	"uretim": "Üretim",
+	"@uretim": {
+		"description": "aciklama"
+	},
+	"dun": "Dün",
+	"@dun": {
+		"description": "aciklama"
+	},
+	"gecenHafta": "Geçen Hafta",
+	"@gecenHafta": {
+		"description": "aciklama"
+	},
+	"gecenAy": "Geçen Ay",
+	"@gecenAy": {
+		"description": "aciklama"
+	},
+	"gecenYil": "Geçen Yıl",
+	"@gecenYil": {
+		"description": "aciklama"
+	},
+	"elektrikTuketim": "Elektrik Tüketim",
+	"@elektrikTuketim": {
+		"description": "aciklama"
+	},
+	"su": "Su",
+	"@su": {
+		"description": "aciklama"
+	},
+	"dogalGaz": "Doğal Gaz",
+	"@dogalGaz": {
+		"description": "aciklama"
+	},
+	"buhar": "Buhar",
+	"@buhar": {
+		"description": "aciklama"
+	},
+	"bugun": "Bu Gün",
+	"@bugun": {
+		"description": "aciklama"
+	},
+	"buHafta": "Bu Hafta",
+	"@buHafta": {
+		"description": "aciklama"
+	},
+	"buAy": "Bu Ay",
+	"@buAy": {
+		"description": "aciklama"
+	},
+	"buYil": "Bu Yıl",
+	"@buYil": {
+		"description": "aciklama"
+	},
+		"fark": "Fark",
+	"@fark": {
+		"description": "description"
+	}, 
+	"endeks": "Index",
+  "@endeks": {
+    "description": "description"
+  },
+   "isletmeSecildi": "İşletme Seçildi.",
+  "@isletmeSecildi": {
+    "description": "aciklama"
+  },
+  "isletmeSecimiBasarisiz": "İşletme Seçimi başarısız. Hata kodu:",
+  "@isletmeSecimiBasarisiz": {
+    "description": "aciklama"
+  },
+  "isletmeSecimiHatasi": "İşletme Seçimi sırasında bir hata oluştu.",
+  "@isletmeSecimiHatasi": {
+    "description": "aciklama"
+  },
+  "cikisOnayi": "Çıkış yapmak istediğinizden emin misiniz?",
+  "@cikisOnayi": {
+    "description": "aciklama"
+  },
+  "cikis": "Çıkış",
+  "@cikis": {
+    "description": "aciklama"
+  },
+  "iptal": "İptal",
+  "@iptal": {
+    "description": "aciklama"
+  },
+  "girisIsmi": "Giriş İsmi",
+  "@girisIsmi": {
+    "description": "aciklama"
+  },
+  "ePosta": "E-Posta",
+  "@ePosta": {
+    "description": "aciklama"
+  },
+  "firmaAdi": "Firma Adı",
+  "@firmaAdi": {
+    "description": "aciklama"
+  },
+  "beklenmedikHata": "Beklenmedik bir hata oluştu.",
+  "@beklenmedikHata": {
+    "description": "aciklama"
+  },
+  "tumAlanlariDoldurun": "Lütfen gerekli tüm alanları doldurun.",
+  "@tumAlanlariDoldurun": {
+    "description": "aciklama"
+  },
+  "ornek": "Örnek",
+  "@ornek": {
+    "description": "aciklama"
+  },
+  "adSoyad": "Ad Soyad",
+  "@adSoyad": {
+    "description": "aciklama"
+  },
+  "rol": "Rol",
+  "@rol": {
+    "description": "aciklama"
+  },
+  "firmaCalismaAlani": "Firma Çalışma Alanı",
+  "@firmaCalismaAlani": {
+    "description": "aciklama"
+  },
+  "telefon": "Telefon",
+  "@telefon": {
+    "description": "aciklama"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "aciklama"
+  },
+  "demoIste": "Demo İste",
+  "@demoIste": {
+    "description": "aciklama"
+  },
+  "kayitAlindi": "Kaydınız Alınmıştır.",
+  "@kayitAlindi": {
+    "description": "aciklama"
+  },
+  "kayitIletildi": "Kaydınız İletilmiştir.",
+  "@kayitIletildi": {
+    "description": "aciklama"
+  },
+  "hataTekrarDeneyin": "Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.",
+  "@hataTekrarDeneyin": {
+    "description": "aciklama"
+  },
+  "gun": "Gün",
+  "@gun": {
+    "description": "aciklama"
+  },
+  "hafta": "Hafta",
+  "@hafta": {
+    "description": "aciklama"
+  },
+  "ay": "Ay",
+  "@ay": {
+    "description": "aciklama"
+  },
+  "yil": "Yıl",
+  "@yil": {
+    "description": "aciklama"
+  },
+  "gerilim": "Gerilim",
+  "@gerilim": {
+    "description": "aciklama"
+  },
+  "basincFarki": "Basınç Farkı",
+  "@basincFarki": {
+    "description": "aciklama"
+  },
+  "suTuketimi": "Su Tüketimi",
+  "@suTuketimi": {
+    "description": "aciklama"
+  },
+  "filtreKirliligi": "Filtre Kirliliği",
+  "@filtreKirliligi": {
+    "description": "aciklama"
+  },
+  "filtreBakimZamani": "Filtre Bakım Zamanı",
+  "@filtreBakimZamani": {
+    "description": "aciklama"
+  },
+  "damperVerileri": "Damper Verileri",
+  "@damperVerileri": {
+    "description": "aciklama"
+  },
+  "tazeHava": "TAZE HAVA",
+  "@tazeHava": {
+    "description": "aciklama"
+  },
+  "egzoz": "EGZOZ",
+  "@egzoz": {
+    "description": "aciklama"
+  },
+  "devir": "Devir",
+  "@devir": {
+    "description": "aciklama"
+  },
+  "pompaVerileri": "Pompa Verileri",
+  "@pompaVerileri": {
+    "description": "aciklama"
+  },
+  "seperator": "Seperator",
+  "@seperator": {
+    "description": "aciklama"
+  },
+  "doluluk": "Doluluk",
+  "@doluluk": {
+    "description": "aciklama"
+  },
+  "suSicakligi": "Su Sıcaklığı",
+  "@suSicakligi": {
+    "description": "aciklama"
+  },
+  "nem": "Nem",
+  "@nem": {
+    "description": "aciklama"
+  },
+  "sicaklik": "Sıcaklık",
+  "@sicaklik": {
+    "description": "aciklama"
+  },
+  "havuzVerileri": "Havuz Verileri",
+  "@havuzVerileri": {
+    "description": "aciklama"
+  },
+  "cagriMerkezi": "Çağrı Merkezi",
+  "@cagriMerkezi": {
+    "description": "aciklama"
+  },
+  "adres": "Adres",
+  "@adres": {
+    "description": "aciklama"
+  },
+  "salonVerileri": "Salon Verileri",
+  "@salonVerileri": {
+    "description": "aciklama"
+  },
+  "disHavaVerileri": "Dış Hava Verileri",
+  "@disHavaVerileri": {
+    "description": "aciklama"
+  },
+  "havaKanali": "Hava Kanalı",
+  "@havaKanali": {
+    "description": "aciklama"
+  },
+  "havaHizi": "Hava Hızı",
+  "@havaHizi": {
+    "description": "aciklama"
+  },
+  "kanalSicakligi": "Kanal Sıcaklığı",
+  "@kanalSicakligi": {
+    "description": "aciklama"
+  },
+  "kanalNemi": "Kanal Nemi",
+  "@kanalNemi": {
+    "description": "aciklama"
+  },
+   "fan": "Fanlar",
+  "@fan": {
+    "description": "aciklama"
+  },
+     "basinc": "Basınç",
+  "@basinc": {
+    "description": "aciklama"
+  },
+     "asprator": "Basınç",
+  "@asprator": {
+    "description": "aciklama"
+  },
+     "turkce": "Türkce",
+  "@turkce": {
+    "description": "aciklama"
+  },
+     "ingilzice": "İngilizce",
+  "@ingilzice": {
+    "description": "aciklama"
+  },
+     "onboard1": "Uygulamamızla, fabrikanızın her yerinden makineleri izleyip maliyetleri azaltabilirsiniz.",
+  "@onboard1": {
+    "description": "aciklama"
+  },
+     "onboard2": "Mobil uygulamamızla enerji takibi yapın, verimliliği optimize edin ve rekabet avantajı elde edin.",
+  "@onboard2": {
+    "description": "aciklama"
+  },
+     "onboard3": "Fabrikanızın mobil kontrolünü sağlayın; uygulamamızla üretim süreçlerinizi daha verimli yönetin.",
+  "@onboard3": {
+    "description": "aciklama"
+  },
+     "onboard4": "Anlık bildirimlerle endüstriyel arızalara hızla müdahale ederek performansı artırın ve maliyetleri düşürün.",
+  "@onboard4": {
+    "description": "aciklama"
+  },
+     "guncelememevcut": "Güncelleme Mevcut",
+  "@guncelememevcut": {
+    "description": "aciklama"
+  },
+     "guncelle": "Güncelle",
+  "@guncelle": {
+    "description": "aciklama"
+  },
+     "guncellemedevam": "Uygulamanızın en güncel sürümünü kullanabilmeniz için bir güncelleme yayınladık. Daha iyi hizmet ve geliştirilmiş bir deneyim için lütfen uygulamanızı güncelleyiniz.",
+  "@guncellemedevam": {
+    "description": "aciklama"
+  },
+     "kategorigrafigi": "Kategori Grafiği Oluşturulamadı.",
+  "@kategorigrafigi": {
+    "description": "aciklama"
+  },
+     "ocak": "Ocak",
+  "@ocak": {
+    "description": "aciklama"
+  },
+     "subat": "Şubat",
+  "@subat": {
+    "description": "aciklama"
+  },
+     "mart": "Mart",
+  "@mart": {
+    "description": "aciklama"
+  },
+     "nisan": "Nisan",
+  "@nisan": {
+    "description": "aciklama"
+  },
+     "mayis": "Mayıs",
+  "@mayis": {
+    "description": "aciklama"
+  },
+     "haziran": "Haziran",
+  "@haziran": {
+    "description": "aciklama"
+  },
+     "temmuz": "Temmuz",
+  "@temmuz": {
+    "description": "aciklama"
+  },
+     "agustos": "Ağustos",
+  "@agustos": {
+    "description": "aciklama"
+  },
+     "eylul": "Eylül",
+  "@eylul": {
+    "description": "aciklama"
+  },
+     "ekim": "Ekim",
+  "@ekim": {
+    "description": "aciklama"
+  },
+     "kasim": "Kasım",
+  "@kasim": {
+    "description": "aciklama"
+  },
+     "aralik": "Aralık",
+  "@aralik": {
+    "description": "aciklama"
+  },
+     "gunluk": "Günlük",
+  "@gunluk": {
+    "description": "aciklama"
+  },
+     "aylik": "Aylık",
+  "@aylik": {
+    "description": "aciklama"
+  },
+     "yillik": "Yıllık",
+  "@yillik": {
+    "description": "aciklama"
+  },
+     "gesUretimFarki": "Ges Üretim Tüketim Farkı",
+  "@gesUretimFarki": {
+    "description": "aciklama"
+  },
+     "fabrikatoplamtuketim": "Fabrika Toplam Tüketim",
+  "@fabrikatoplamtuketim": {
+    "description": "aciklama"
+  },  
+       "ozet": "Özet",
+  "@ozet": {
+    "description": "aciklama"
+  },  
+       "elektrik": "Elektrik",
+  "@elektrik": {
+    "description": "aciklama"
+  },  
+       "ges": "GES",
+  "@ges": {
+    "description": "aciklama"
+  },  
+       "karbon": "Karbon",
+  "@karbon": {
+    "description": "aciklama"
+  },  
+       "karbonEmisyonu": "Karbon Emisyonu",
+  "@karbonEmisyonu": {
+    "description": "aciklama"
+  },  
+       "karbonEmisyonFarki": "Karbon Emisyon Farkı",
+  "@karbonEmisyonFarki": {
+    "description": "aciklama"
+  },  
+       "karbonAzaltimi": "Karbon Azaltımı",
+  "@karbonAzaltimi": {
+    "description": "aciklama"
+  },
+       "agacSayisi": "Karbon Azaltımı",
+  "@agacSayisi": {
+    "description": "aciklama"
+  },
+  "acik": "Açık",
+  "@acik": { "description": "aciklama" },
+    "kapali": "Kapalı",
+  "@kapali": { "description": "aciklama" },
+
+  "toplam": "Toplam",
+  "@toplam": { "description": "aciklama" }
+  , "tumu": "Tümü",
+  "@tumu": { "description": "aciklama" }
+
+
+ 
+
+
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973833734950",
+    "project_id": "controlapp-6f7ce",
+    "storage_bucket": "controlapp-6f7ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973833734950:android:d11fec6ef80e774670cfe7",
+        "android_client_info": {
+          "package_name": "com.yarbay.controlapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpN64jA4W1x1MYlKhr_xFwWOZJKVc-ugE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

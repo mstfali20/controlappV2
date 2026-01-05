@@ -1,0 +1,19 @@
+# flutter_native_splash-development.yaml
+flutter_native_splash:
+
+  # background_image: assets/splash/d.png
+  color: "#123AE3"
+  image: assets/splash/logo.png
+  branding: assets/splash/branding.png
+
+
+  android_12:
+    color: "#123AE3"
+    image: assets/splash/android_logo.png
+    branding: assets/splash/android_branding.png
+
+
+  web: false
+  android: true
+  ios: true
+

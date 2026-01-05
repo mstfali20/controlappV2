@@ -1,0 +1,21 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - ios/**
+    - android/**
+  errors:
+    invalid_override_of_non_virtual_member: warning
+    unnecessary_import: warning
+
+dart_code_metrics:
+  extends:
+    - package:dart_code_metrics_presets/recommended.yaml
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 6
+    source-lines-of-code: 80
+  rules:
+    - avoid-missing-enum-constant-in-map
+    - prefer-correct-identifier-length

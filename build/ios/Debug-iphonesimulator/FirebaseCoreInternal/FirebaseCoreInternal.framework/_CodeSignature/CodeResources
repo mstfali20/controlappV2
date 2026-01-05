@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		9YFTxPcaUKt8lahdTKqKsW0jyF0=
+		vabGgD9+UOzfnrAeYVL1/OGUB9c=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		//mKMIxgEEEBl7HfxPF/wNseM9k=
+		JEtEbbqNVtuX+bDwrCLrNun6l+4=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		NG5DHI9N9vteqdyo7RhBwQ7nZY4=
+		ZYVhTLE0iSHsFTwQWkJOskTYmoE=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		um0F+VZ28bS11T3KYrIl3L759lQ=
+		uZ7bYQbkEVnQSknD4HoZwc+oLQ4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -95,14 +95,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LaI5p2IXxRuO54J/g2/yXaAjQkdyOOC1HMoIixg6bio=
+			GcqPsFiIx2Eb71us9TY1eqHvTtEqR3aKOWlFsbZTmcQ=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VBM03NoKcKE1J5j1tubcMBdyoqUICJD715vxTPSYmJI=
+			pYxHv5/G7klztHQh9F5CemicDmKx3i898DH/f/eAcpg=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -123,7 +123,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			T1QI9Is73Ngp32RKNwGoLcxmRXM3t42uQHopzxhEBf8=
+			dPZlcUMBgsP7lKX8iIOWUvH62XGZ2+BCUqHGLK1LorI=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -144,7 +144,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BXqerWI2pCpPRmnfxdS12JM8tRuoVGl6e2oHFs2sH0k=
+			Qy98gM0olmRdHu2Vytn7/sx6y2XyF5amOutpxJUNxes=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

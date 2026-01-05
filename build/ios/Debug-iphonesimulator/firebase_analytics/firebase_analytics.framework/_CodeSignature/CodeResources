@@ -34,7 +34,7 @@
 		</data>
 		<key>Modules/firebase_analytics.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		nOWXxLXnpGcoKghoqJYJzpiy7zI=
+		wfhGMpZu9w+PM8d84302S9h9QHw=
 		</data>
 		<key>Modules/firebase_analytics.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Modules/firebase_analytics.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		zvyeDyu3GdPNAWvH9ILj3xtOqTs=
+		vib7G6Vur42HXrEsf2AYlMEc2z0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -101,7 +101,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JPqp2u8thy9/kVpb2DjJ1mBO7kNuoxBIF5TpUoQGDt0=
+			Zad8T3vRlydfFE3JcKLNqoBWsy9FstUO9S+y92ESDgg=
 			</data>
 		</dict>
 		<key>Modules/firebase_analytics.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -122,7 +122,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9FZXyM5t/isJe5EyMBWTf2788eYOcptorqdrd3GRhuM=
+			/Zt/eTRkxr685CJq8ZBIBXpqE2TMDVLWLtWcEi2F9gY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

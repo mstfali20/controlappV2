@@ -1,5 +1,5 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/mustafaalikilci/flutterProjeleri/controlapp/build/ios/Debug-iphonesimulator/Runner.app/Runner'
+binary-path:     '/Users/mustafaalikilci/flutterProjeleri/controlappV2/build/ios/Debug-iphonesimulator/Runner.app/Runner'
 relocations:     []
 ...

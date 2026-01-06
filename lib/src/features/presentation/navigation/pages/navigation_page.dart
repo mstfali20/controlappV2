@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:controlapp/src/core/di/injector.dart';
 import 'package:controlapp/src/features/auth/domain/usecases/get_session_usecase.dart';
-import 'package:controlapp/src/features/climate/domain/usecases/fetch_climate_snapshot_usecase.dart';
-import 'package:controlapp/src/features/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/climate/domain/usecases/fetch_climate_snapshot_usecase.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
 import 'package:controlapp/src/features/presentation/home/view_model/home_cubit.dart';
 import 'package:controlapp/src/features/auth/domain/usecases/update_session_selection_usecase.dart';
 

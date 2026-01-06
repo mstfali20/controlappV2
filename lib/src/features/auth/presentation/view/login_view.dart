@@ -4,6 +4,8 @@ import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
 import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
 import 'package:controlapp/data/tree_node.dart';
+import 'package:controlapp/src/core/config/tree_sections.dart';
+import 'package:controlapp/src/core/utils/tree_selection.dart';
 import 'package:controlapp/src/features/presentation/navigation/pages/navigation_page.dart';
 import 'package:controlapp/src/features/presentation/register_page.dart';
 import 'package:controlapp/widget/square_box.dart';
@@ -16,8 +18,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:controlapp/l10n/app_localizations.dart';
 
 import '../../../../core/di/injector.dart';
-import '../../../energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
-import '../../../climate/domain/usecases/fetch_climate_snapshot_usecase.dart';
+import '../../../enerji_izleme/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
+import '../../../yardimci_tesisler/climate/domain/usecases/fetch_climate_snapshot_usecase.dart';
 import '../view_model/auth_cubit.dart';
 import '../view_model/auth_state.dart';
 
@@ -476,99 +478,18 @@ class _LoginViewContentState extends State<_LoginViewContent> {
         sessionPassword,
       );
 
-      if (organizationList.isEmpty) {
+      if (organizationList.isEmpty && sectionList.isEmpty) {
         loginErrorAlert();
         return;
       }
 
-      if (organizationList.length > 1) {
-        if (!mounted) return;
-        final selectedOrganization = await showDialog<OrganizationData>(
-          barrierDismissible: false,
-          context: context,
-          builder: (dialogContext) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.modulSec,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    child: ListView.builder(
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: organizationList.length,
-                      itemBuilder: (context, index) {
-                        final organization = organizationList[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              Navigator.pop(dialogContext, organization);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  width: 1,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 22,
-                                  vertical: 12,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    organization.caption,
-                                    style: const TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-
-        if (selectedOrganization == null) {
-          loginErrorAlert();
-          return;
-        }
-
-        serialTitle = selectedOrganization.caption;
-        await guncelleFunc(
-          context,
-          session.username,
-          sessionPassword,
-          serialTitle,
-        );
+      final selectedOrganization = await _selectOrganizationForLogin(context);
+      if (selectedOrganization == null) {
+        loginErrorAlert();
         return;
       }
 
-      serialTitle = organizationList.first.caption;
+      serialTitle = selectedOrganization.caption;
       await guncelleFunc(
         context,
         session.username,
@@ -584,6 +505,204 @@ class _LoginViewContentState extends State<_LoginViewContent> {
           ),
         );
     }
+  }
+
+  Future<OrganizationData?> _selectOrganizationForLogin(
+    BuildContext context,
+  ) async {
+    if (sectionList.isNotEmpty) {
+      if (sectionList.length == 1) {
+        return _selectOrganizationFromSection(context, sectionList.first);
+      }
+
+      final selectedSection = await _showSectionPicker(context, sectionList);
+      if (selectedSection == null) {
+        return null;
+      }
+      return _selectOrganizationFromSection(context, selectedSection);
+    }
+
+    if (organizationList.isEmpty) {
+      return null;
+    }
+    if (organizationList.length == 1) {
+      return organizationList.first;
+    }
+
+    return _showOrganizationPicker(
+      context,
+      organizationList,
+      title: AppLocalizations.of(context)!.modulSec,
+    );
+  }
+
+  Future<OrganizationData?> _selectOrganizationFromSection(
+    BuildContext context,
+    SectionData section,
+  ) async {
+    if (section.organizations.isEmpty) {
+      return null;
+    }
+    if (section.organizations.length == 1) {
+      return section.organizations.first;
+    }
+
+    return _showOrganizationPicker(
+      context,
+      section.organizations,
+      title: section.caption,
+    );
+  }
+
+  Future<SectionData?> _showSectionPicker(
+    BuildContext context,
+    List<SectionData> sections,
+  ) {
+    return showDialog<SectionData>(
+      barrierDismissible: false,
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.modulSec,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: ListView.builder(
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: sections.length,
+                  itemBuilder: (context, index) {
+                    final section = sections[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          Navigator.pop(dialogContext, section);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 12,
+                            ),
+                            child: Center(
+                              child: Text(
+                                section.caption,
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<OrganizationData?> _showOrganizationPicker(
+    BuildContext context,
+    List<OrganizationData> organizations, {
+    required String title,
+  }) {
+    return showDialog<OrganizationData>(
+      barrierDismissible: false,
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: ListView.builder(
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: organizations.length,
+                  itemBuilder: (context, index) {
+                    final organization = organizations[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          Navigator.pop(dialogContext, organization);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 12,
+                            ),
+                            child: Center(
+                              child: Text(
+                                organization.displayCaption,
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void loginErrorAlert() {
@@ -663,6 +782,30 @@ class _LoginViewContentState extends State<_LoginViewContent> {
     );
   }
 
+  String? _resolveSectionIdForCaption(String caption) {
+    final normalized = caption.trim();
+    for (final section in sectionList) {
+      for (final organization in section.organizations) {
+        if (organization.caption.trim() == normalized) {
+          return section.id;
+        }
+      }
+    }
+    return null;
+  }
+
+  SectionData? _resolveSectionForCaption(String caption) {
+    final normalized = caption.trim();
+    for (final section in sectionList) {
+      for (final organization in section.organizations) {
+        if (organization.caption.trim() == normalized) {
+          return section;
+        }
+      }
+    }
+    return null;
+  }
+
   Future<List<TreeNode>> _loadAndParseTree() async {
     return TreeNode.parseTreeNodes(treeJson);
   }
@@ -679,149 +822,125 @@ class _LoginViewContentState extends State<_LoginViewContent> {
       // Tree verilerini yükle ve işle
       List<TreeNode> nodes = await _loadAndParseTree();
 
-      final firmName = (userDataConst["firm_name"]?.toString() ?? '').trim();
-      // "TanTekstil" düğümünü bulma
-      TreeNode nodesName = nodes.firstWhere(
-        (node) => node.caption.trim() == firmName,
-        orElse: () =>
-            TreeNode.empty(), // Burada boş bir TreeNode döndürmelisiniz
-      );
-
-      // Eğer "TanTekstil" bulunduysa, altındaki "Enerji İzleme Sistemi" düğümünü bul
-      TreeNode organizizasyom = nodesName.children.firstWhere(
-        (childNode) => childNode.caption == selectedSerialTitle,
+      final normalizedSelection = selectedSerialTitle.trim();
+      TreeNode organizizasyom = nodes.firstWhere(
+        (node) =>
+            node.classType.trim() == 'obm_organization' &&
+            node.caption.trim() == normalizedSelection,
         orElse: () =>
             TreeNode.empty(), // Burada da boş bir TreeNode döndürmelisiniz
       );
 
       // Burada organizizasyom altında istediğiniz verilere erişebilirsiniz
       if (organizizasyom != TreeNode.empty()) {
-        // Örneğin, organizizasyom'un altındaki verilere erişim
-        // Varsayılan olarak, bir alt düğüm veya veri listesi varsa, onlara erişebilirsiniz.
-        List<TreeNode> altVeriler =
-            organizizasyom.children; // veya organizizasyom.data gibi
+        final section = _resolveSectionForCaption(selectedSerialTitle);
+        final sectionId = section?.id;
+        final preferredCaptions = preferredDeviceCaptionsForSection(sectionId);
+        final ilkVeri = findFirstDevice(
+          organizizasyom,
+          preferredCaptions: preferredCaptions,
+        );
 
-        if (altVeriler.isNotEmpty) {
-          final ilkVeri = altVeriler.firstWhere(
-            (node) => node.classType == 'obm_device',
-            orElse: TreeNode.empty,
+        if (ilkVeri == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.altVeriBulunamadi),
+              duration: const Duration(seconds: 3),
+            ),
+          );
+          return;
+        }
+
+        final ilkVeriId = ilkVeri.id;
+        plcTitle = ilkVeri.caption;
+        serialTitle = selectedSerialTitle;
+        selectedModule = section?.caption ?? selectedSerialTitle;
+        userDataConst['selected_module'] = selectedModule;
+        log("İlk Veri ID: $ilkVeriId");
+
+        bool success = false;
+        if (selectedSerialTitle == iklimlendirmeIzlem) {
+          final climateUseCase = getIt<FetchClimateSnapshotUseCase>();
+          final snapshot = await climateUseCase(
+            FetchClimateSnapshotParams(
+              username: username,
+              password: password,
+              deviceId: ilkVeriId,
+            ),
           );
 
-          if (ilkVeri == TreeNode.empty()) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(AppLocalizations.of(context)!.altVeriBulunamadi),
-                duration: const Duration(seconds: 3),
-              ),
-            );
-            return;
-          }
-
-          final ilkVeriId = ilkVeri.id;
-          plcTitle = ilkVeri.caption;
-          serialTitle = selectedSerialTitle;
-          selectedModule = selectedSerialTitle;
-          userDataConst['selected_module'] = selectedModule;
-          log("İlk Veri ID: $ilkVeriId");
-
-          bool success = false;
-          if (selectedSerialTitle == iklimlendirmeIzlem) {
-            final climateUseCase = getIt<FetchClimateSnapshotUseCase>();
-            final snapshot = await climateUseCase(
-              FetchClimateSnapshotParams(
-                username: username,
-                password: password,
-                deviceId: ilkVeriId,
-              ),
-            );
-
-            if (snapshot.isSuccess) {
-              final values = Map<String, String>.from(snapshot.values);
-              if (values['ErrorNumber'] == null ||
-                  values['ErrorNumber'] == '0') {
-                anaAnlikVeriMap
-                  ..clear()
-                  ..addAll(values);
-                serial = ilkVeriId;
-                success = true;
-              }
-            }
-          } else {
-            final snapshot = await fetchUseCase(
-              FetchEnergySnapshotParams(
-                username: username,
-                password: password,
-                deviceId: ilkVeriId,
-              ),
-            );
-
-            if (snapshot.isSuccess) {
+          if (snapshot.isSuccess) {
+            final values = Map<String, String>.from(snapshot.values);
+            if (values['ErrorNumber'] == null || values['ErrorNumber'] == '0') {
               anaAnlikVeriMap
                 ..clear()
-                ..addAll(snapshot.values);
+                ..addAll(values);
               serial = ilkVeriId;
               success = true;
             }
           }
-
-          if (success) {
-            final ids = organizationList
-                .where((organization) =>
-                    organization.caption == selectedSerialTitle)
-                .map((organization) => organization.id)
-                .toList();
-            if (ids.isNotEmpty) {
-              organizationid = ids.first;
-            }
-
-            users = username;
-            pass = password;
-            userDataConst['serial'] = serial;
-            userDataConst['serialTitle'] = serialTitle;
-            userDataConst['plcTitle'] = plcTitle;
-            userDataConst['selected_module'] = selectedModule;
-
-            final authCubit = context.read<AuthCubit>();
-            final currentSession = authCubit.state.session;
-            if (currentSession != null) {
-              final updatedSession = currentSession.copyWith(
-                serial: ilkVeriId,
-                serialTitle: serialTitle,
-                plcTitle: ilkVeri.caption,
-                selectedOrganizationId: ids.isNotEmpty
-                    ? ids.first
-                    : currentSession.selectedOrganizationId,
-                treeJson:
-                    treeJson.isNotEmpty ? treeJson : currentSession.treeJson,
-                password: currentSession.password,
-                extras: {
-                  ...currentSession.extras,
-                  'selected_module': selectedModule,
-                },
-              );
-              await authCubit.cacheSession(updatedSession);
-            }
-
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const NavigatiorPage()),
-              (route) => false,
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  AppLocalizations.of(context)!.beklenmedikHata,
-                ),
-                duration: const Duration(seconds: 3),
-              ),
-            );
-          }
         } else {
-          // Eğer alt veri yoksa
+          final snapshot = await fetchUseCase(
+            FetchEnergySnapshotParams(
+              username: username,
+              password: password,
+              deviceId: ilkVeriId,
+            ),
+          );
+
+          if (snapshot.isSuccess) {
+            anaAnlikVeriMap
+              ..clear()
+              ..addAll(snapshot.values);
+            serial = ilkVeriId;
+            success = true;
+          }
+        }
+
+        if (success) {
+          if (organizizasyom.id.isNotEmpty) {
+            organizationid = organizizasyom.id;
+          }
+
+          users = username;
+          pass = password;
+          userDataConst['serial'] = serial;
+          userDataConst['serialTitle'] = serialTitle;
+          userDataConst['plcTitle'] = plcTitle;
+          userDataConst['selected_module'] = selectedModule;
+
+          final authCubit = context.read<AuthCubit>();
+          final currentSession = authCubit.state.session;
+          if (currentSession != null) {
+            final updatedSession = currentSession.copyWith(
+              serial: ilkVeriId,
+              serialTitle: serialTitle,
+              plcTitle: ilkVeri.caption,
+              selectedOrganizationId: organizizasyom.id.isNotEmpty
+                  ? organizizasyom.id
+                  : currentSession.selectedOrganizationId,
+              treeJson:
+                  treeJson.isNotEmpty ? treeJson : currentSession.treeJson,
+              password: currentSession.password,
+              extras: {
+                ...currentSession.extras,
+                'selected_module': selectedModule,
+              },
+            );
+            await authCubit.cacheSession(updatedSession);
+          }
+
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const NavigatiorPage()),
+            (route) => false,
+          );
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(AppLocalizations.of(context)!.altVeriBulunamadi),
+              content: Text(
+                AppLocalizations.of(context)!.beklenmedikHata,
+              ),
               duration: const Duration(seconds: 3),
             ),
           );

@@ -6,7 +6,8 @@ import 'package:controlapp/src/features/auth/presentation/view/onboarding_view.d
 import 'package:controlapp/src/features/presentation/profile/view_model/profile_cubit.dart';
 import 'package:controlapp/src/features/presentation/profile/view_model/profile_state.dart';
 import 'package:controlapp/src/features/presentation/shared/module_device_header.dart';
-import 'package:controlapp/src/features/climate/presentation/pages/iletisim_page.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/climate/presentation/pages/iletisim_page.dart';
+import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
 import 'package:controlapp/widget/profilbilgi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -191,6 +192,17 @@ class ProfilPage extends StatelessWidget {
   }
 
   List<Widget> _buildModuleTiles(BuildContext context) {
+    if (legacy_data.sectionList.isNotEmpty) {
+      return legacy_data.sectionList.map((section) {
+        return ProfileModuleTile(
+          icon: _sectionIcon(section.id),
+          text: section.caption,
+          delay: 1.4,
+          onTap: () => _handleSectionTap(context, section),
+        );
+      }).toList();
+    }
+
     final entries = [
       _ProfileModuleEntry(
           caption: legacy_data.iklimlendirmeIzlem, icon: Icons.air),
@@ -216,6 +228,114 @@ class ProfilPage extends StatelessWidget {
           ),
         )
         .toList();
+  }
+
+  IconData _sectionIcon(String sectionId) {
+    switch (sectionId) {
+      case 'energy':
+        return Icons.settings_input_component;
+      case 'renewable':
+        return Icons.wb_sunny;
+      case 'utilities':
+        return Icons.build;
+      case 'production':
+        return Icons.precision_manufacturing;
+      default:
+        return Icons.category;
+    }
+  }
+
+  Future<void> _handleSectionTap(
+    BuildContext context,
+    SectionData section,
+  ) async {
+    if (section.organizations.isEmpty) {
+      return;
+    }
+
+    final organization = section.organizations.length == 1
+        ? section.organizations.first
+        : await _showOrganizationDialog(context, section);
+    if (organization == null) {
+      return;
+    }
+
+    context.read<ProfileCubit>().selectOrganization(organization.caption);
+  }
+
+  Future<OrganizationData?> _showOrganizationDialog(
+    BuildContext context,
+    SectionData section,
+  ) {
+    return showDialog<OrganizationData>(
+      barrierDismissible: true,
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                section.caption,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: ListView.builder(
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: section.organizations.length,
+                  itemBuilder: (context, index) {
+                    final organization = section.organizations[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          Navigator.pop(dialogContext, organization);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 12,
+                            ),
+                            child: Center(
+                              child: Text(
+                                organization.displayCaption,
+                                style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   static Future<void> _launchExternalUrl(String url) async {

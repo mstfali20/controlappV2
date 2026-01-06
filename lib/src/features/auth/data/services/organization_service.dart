@@ -2,19 +2,37 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:controlapp/const/data.dart';
 import 'package:controlapp/data/tree_node.dart';
+import 'package:controlapp/src/core/config/tree_sections.dart';
 import 'package:http/http.dart' as http;
 
 // Organization veri modelini tanımlıyoruz
 class OrganizationData {
   final String id;
   final String caption;
+  final String displayCaption;
 
-  OrganizationData(this.id, this.caption);
+  OrganizationData(
+    this.id,
+    this.caption, {
+    String? displayCaption,
+  }) : displayCaption = displayCaption ?? caption;
 
   @override
   String toString() {
-    return 'OrganizationData{id: $id, caption: $caption}';
+    return 'OrganizationData{id: $id, caption: $caption, displayCaption: $displayCaption}';
   }
+}
+
+class SectionData {
+  final String id;
+  final String caption;
+  final List<OrganizationData> organizations;
+
+  const SectionData({
+    required this.id,
+    required this.caption,
+    required this.organizations,
+  });
 }
 
 void populateOrganizationsFromTree({String? treeContent}) {
@@ -32,6 +50,7 @@ void populateOrganizationsFromTree({String? treeContent}) {
 
     organizationList.clear();
     altorganizationList.clear();
+    sectionList.clear();
 
     for (final node in nodes) {
       final normalizedClass = node.classType.trim();
@@ -46,6 +65,8 @@ void populateOrganizationsFromTree({String? treeContent}) {
         }
       }
     }
+
+    _populateSectionsFromTree(root);
   } catch (_) {
     // parsing failed; keep existing list
   }
@@ -61,6 +82,7 @@ class OrganizationService {
   Future<List<OrganizationData>> fetchOrganizations(
       String username, String password) async {
     organizationList.clear();
+    sectionList.clear();
     treeJson = '';
 
     try {
@@ -104,6 +126,7 @@ class OrganizationService {
           }
         }
 
+        _populateSectionsFromTree(root);
         return organizationList;
       } else {
         log('Sunucu hatası: ${res.statusCode}');
@@ -114,4 +137,56 @@ class OrganizationService {
       return [];
     }
   }
+}
+
+void _populateSectionsFromTree(TreeNode root) {
+  final organizations = root
+      .walk()
+      .where((node) => node.classType.trim() == 'obm_organization')
+      .toList();
+
+  for (final section in treeSectionConfigs) {
+    final matched = <String, OrganizationData>{};
+    for (final node in organizations) {
+      final caption = node.caption.trim();
+      if (section.matchCaptions.contains(caption) &&
+          _organizationHasDevice(node)) {
+        matched[node.id] = OrganizationData(node.id, caption);
+      }
+    }
+    if (matched.isEmpty) {
+      continue;
+    }
+    final sectionOrganizations = matched.values
+        .map(
+          (organization) => OrganizationData(
+            organization.id,
+            organization.caption,
+            displayCaption: displayCaptionForSection(
+              section.id,
+              organization.caption,
+            ),
+          ),
+        )
+        .toList()
+      ..sort(
+        (a, b) => a.displayCaption.compareTo(b.displayCaption),
+      );
+    sectionList.add(
+      SectionData(
+        id: section.id,
+        caption: section.caption,
+        organizations: sectionOrganizations,
+      ),
+    );
+  }
+}
+
+bool _organizationHasDevice(TreeNode node) {
+  for (final child in node.walk()) {
+    if (child.classType.trim() == 'obm_device') {
+      return true;
+    }
+  }
+  return false;
 }

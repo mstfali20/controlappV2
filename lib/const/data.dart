@@ -16,13 +16,14 @@ Map<String, dynamic> userDataConst = {};
 // List<PlcData> plcList = [];
 List<OrganizationData> organizationList = [];
 List<OrganizationData> altorganizationList = [];
+List<SectionData> sectionList = [];
 int deviceCount = 0;
 String treeJson = "";
 String serial = '';
 String serialTitle = '';
 String plcTitle = '';
 String organizationid = '';
-String selectedModule = enerjiIzlem;
+String selectedModule = 'Enerji İzleme';
 
 String catogari = '';
 String satisUrl = 'https://www.controlapp.com.tr/';

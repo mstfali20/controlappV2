@@ -4,6 +4,8 @@ import 'package:controlapp/const/data.dart' as legacy_data;
 import 'package:controlapp/data/tree_node.dart';
 import 'package:controlapp/src/core/presentation/safe_cubit.dart';
 import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
+import 'package:controlapp/src/core/config/tree_sections.dart';
+import 'package:controlapp/src/core/utils/tree_selection.dart';
 
 import '../../home/view_model/home_cubit.dart';
 import '../../home/view_model/home_state.dart';
@@ -34,23 +36,12 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         return;
       }
 
-      final firmName = (_homeCubit.state.userSummary.firmName.isNotEmpty
-              ? _homeCubit.state.userSummary.firmName
-              : legacy_data.userDataConst['firm_name']?.toString() ?? '')
-          .trim();
 
-      final firmNode = nodes.firstWhere(
-        (node) => node.caption.trim() == firmName,
-        orElse: TreeNode.empty,
-      );
-
-      if (_isNodeEmpty(firmNode)) {
-        emit(_failureState('Organizasyon bulunamadı.'));
-        return;
-      }
-
-      final organizationNode = firmNode.children.firstWhere(
-        (child) => child.caption.trim() == caption,
+      final normalizedCaption = caption.trim();
+      final organizationNode = nodes.firstWhere(
+        (node) =>
+            node.classType.trim() == 'obm_organization' &&
+            node.caption.trim() == normalizedCaption,
         orElse: TreeNode.empty,
       );
 
@@ -59,10 +50,15 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         return;
       }
 
-      final selectedDevice = organizationNode.children.firstWhere(
-        (element) => element.classType == 'obm_device',
-        orElse: TreeNode.empty,
-      );
+      final section = _resolveSectionForCaption(normalizedCaption);
+      final sectionId = section?.id;
+      final preferredCaptions =
+          preferredDeviceCaptionsForSection(sectionId);
+      final selectedDevice = findFirstDevice(
+            organizationNode,
+            preferredCaptions: preferredCaptions,
+          ) ??
+          TreeNode.empty();
 
       if (_isNodeEmpty(selectedDevice)) {
         emit(_failureState('Seçilebilecek cihaz bulunamadı.'));
@@ -76,12 +72,13 @@ class ProfileCubit extends SafeCubit<ProfileState> {
               ? selectedDevice.title
               : selectedDevice.id);
 
-      await _homeCubit.changeModule(caption);
+      final moduleCaption = section?.caption ?? caption;
+      await _homeCubit.changeModule(moduleCaption);
       await _homeCubit.changeDevice(
         deviceId: deviceId,
         deviceTitle: deviceTitle,
         plcTitle: deviceTitle,
-        module: caption,
+        module: moduleCaption,
         organizationId: organizationNode.id,
       );
 
@@ -109,7 +106,8 @@ class ProfileCubit extends SafeCubit<ProfileState> {
   }
 
   void _ensureOrganizationsLoaded() {
-    if (legacy_data.organizationList.isNotEmpty) {
+    if (legacy_data.organizationList.isNotEmpty ||
+        legacy_data.sectionList.isNotEmpty) {
       return;
     }
 
@@ -134,6 +132,18 @@ class ProfileCubit extends SafeCubit<ProfileState> {
       await OrganizationService().fetchOrganizations(username, password);
       emit(state.copyWith(status: ProfileStatus.loaded));
     });
+  }
+
+  SectionData? _resolveSectionForCaption(String caption) {
+    final normalized = caption.trim();
+    for (final section in legacy_data.sectionList) {
+      for (final organization in section.organizations) {
+        if (organization.caption.trim() == normalized) {
+          return section;
+        }
+      }
+    }
+    return null;
   }
 
   bool _isNodeEmpty(TreeNode node) =>

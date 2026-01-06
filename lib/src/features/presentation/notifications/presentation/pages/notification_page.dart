@@ -73,33 +73,33 @@ class _NotificationViewState extends State<_NotificationView> {
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 12),
-                    _Header(
-                      isLoading: state.isLoading,
-                      alarmCount: state.alarms.length,
-                    ),
-                    SizedBox(height: 14.h),
-                    _OverviewRow(alarms: state.alarms),
-                    SizedBox(height: 12.h),
-                    _StatusFilterBar(
-                      selectedFilter: _selectedFilter,
-                      onChanged: _onFilterChanged,
-                      alarms: state.alarms,
-                    ),
-                    SizedBox(height: 12.h),
-                    FadeInAnimation(
-                      delay: 1.5,
-                      child: _Content(
+                child: FadeInAnimation(
+                  delay: 1.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 12),
+                      _Header(
+                        isLoading: state.isLoading,
+                        alarmCount: state.alarms.length,
+                      ),
+                      SizedBox(height: 14.h),
+                      _OverviewRow(alarms: state.alarms),
+                      SizedBox(height: 12.h),
+                      _StatusFilterBar(
+                        selectedFilter: _selectedFilter,
+                        onChanged: _onFilterChanged,
+                        alarms: state.alarms,
+                      ),
+                      SizedBox(height: 12.h),
+                      _Content(
                         state: state,
                         filteredAlarms: filteredAlarms,
                         selectedFilter: _selectedFilter,
                       ),
-                    ),
-                    SizedBox(height: 24.h),
-                  ],
+                      SizedBox(height: 24.h),
+                    ],
+                  ),
                 ),
               ),
             );

@@ -1,10 +1,10 @@
 import 'package:controlapp/src/core/presentation/safe_cubit.dart';
 
 import 'package:controlapp/const/data.dart' as legacy_data;
-import 'package:controlapp/src/features/climate/domain/entities/climate_snapshot.dart';
-import 'package:controlapp/src/features/climate/domain/usecases/fetch_climate_snapshot_usecase.dart';
-import 'package:controlapp/src/features/energy/domain/entities/energy_snapshot.dart';
-import 'package:controlapp/src/features/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/climate/domain/entities/climate_snapshot.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/climate/domain/usecases/fetch_climate_snapshot_usecase.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/domain/entities/energy_snapshot.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/domain/usecases/fetch_energy_snapshot_usecase.dart';
 import 'package:controlapp/src/features/auth/domain/entities/session.dart';
 import 'package:controlapp/src/features/auth/domain/usecases/get_session_usecase.dart';
 import 'package:controlapp/src/features/auth/domain/usecases/update_session_selection_usecase.dart';
@@ -28,7 +28,7 @@ class HomeCubit extends SafeCubit<HomeState> {
   final GetSessionUseCase _getSessionUseCase;
   final UpdateSessionSelectionUseCase _updateSessionSelectionUseCase;
 
-  static const energyModuleCaption = 'Enerji İzleme Sistemi';
+  static const energyModuleCaption = 'Enerji İzleme';
   static const climateModuleCaption = 'Klima Santrali İzleme Sistemi';
   static const _energyModule = energyModuleCaption;
   static const _climateModule = climateModuleCaption;
@@ -131,9 +131,10 @@ class HomeCubit extends SafeCubit<HomeState> {
     emit(state.copyWith(status: HomeStatus.loading, clearError: true));
 
     final module = state.selectedModule ?? _energyModule;
+    final isClimateSelection = _isClimateSelection(module);
 
     try {
-      if (module == _climateModule) {
+      if (isClimateSelection) {
         final snapshot = await _fetchClimateSnapshot(
           username: username,
           password: password,
@@ -145,6 +146,7 @@ class HomeCubit extends SafeCubit<HomeState> {
             username: username,
             password: password,
             deviceId: deviceId,
+            module: module,
           );
           return;
         }
@@ -155,7 +157,7 @@ class HomeCubit extends SafeCubit<HomeState> {
             serial: deviceId,
             serialTitle: state.selectedDeviceTitle,
             plcTitle: state.plcTitle,
-            module: _climateModule,
+            module: module,
           );
         }
 
@@ -164,7 +166,7 @@ class HomeCubit extends SafeCubit<HomeState> {
             status: HomeStatus.loaded,
             snapshot: snapshot.values,
             selectedDeviceId: deviceId,
-            selectedModule: _climateModule,
+            selectedModule: module,
             isFallbackToEnergy: false,
           ),
         );
@@ -183,7 +185,7 @@ class HomeCubit extends SafeCubit<HomeState> {
           serial: deviceId,
           serialTitle: state.selectedDeviceTitle,
           plcTitle: state.plcTitle,
-          module: _energyModule,
+          module: module,
         );
       }
 
@@ -192,7 +194,7 @@ class HomeCubit extends SafeCubit<HomeState> {
           status: HomeStatus.loaded,
           snapshot: energySnapshot.values,
           selectedDeviceId: deviceId,
-          selectedModule: _energyModule,
+          selectedModule: module,
           isFallbackToEnergy: false,
         ),
       );
@@ -293,6 +295,7 @@ class HomeCubit extends SafeCubit<HomeState> {
     required String username,
     required String password,
     required String deviceId,
+    required String module,
   }) async {
     try {
       final snapshot = await _fetchEnergySnapshot(
@@ -305,14 +308,14 @@ class HomeCubit extends SafeCubit<HomeState> {
         state.copyWith(
           status: HomeStatus.loaded,
           snapshot: snapshot.values,
-          selectedModule: _energyModule,
+          selectedModule: module,
           isFallbackToEnergy: true,
           clearError: true,
         ),
       );
 
       await _persistSelection(
-        module: _energyModule,
+        module: module,
         serial: deviceId,
       );
     } catch (error) {
@@ -383,5 +386,36 @@ class HomeCubit extends SafeCubit<HomeState> {
     legacy_data.anaAnlikVeriMap
       ..clear()
       ..addAll(snapshot);
+  }
+
+  bool _isClimateSelection(String? module) {
+    if (module == _climateModule) {
+      return true;
+    }
+    final organizationCaption = _resolveSelectedOrganizationCaption();
+    return organizationCaption == _climateModule;
+  }
+
+  String? _resolveSelectedOrganizationCaption() {
+    final organizationId =
+        state.session?.selectedOrganizationId ?? legacy_data.organizationid;
+    if (organizationId == null || organizationId.isEmpty) {
+      return null;
+    }
+    final source =
+        state.treeJson ?? state.session?.treeJson ?? legacy_data.treeJson;
+    if (source.isEmpty) {
+      return null;
+    }
+    final root = TreeNode.parseTree(source);
+    if (root == null) {
+      return null;
+    }
+    final node = root.findById(organizationId);
+    if (node == null) {
+      return null;
+    }
+    final caption = node.caption.trim();
+    return caption.isNotEmpty ? caption : null;
   }
 }

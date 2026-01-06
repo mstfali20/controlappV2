@@ -4,13 +4,13 @@ import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart';
 import 'package:controlapp/const/fade_zoom.dart';
 import 'package:controlapp/const/scale_button.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/electricity_screen.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/overview_screen.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/carbon_screen.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/gas_screen.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/ges_screen.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/steam_screen.dart';
-import 'package:controlapp/src/features/energy/presentation/pages/water_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/electricity_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/overview_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/carbon_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/gas_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/ges_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/steam_screen.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/pages/water_screen.dart';
 import 'package:controlapp/l10n/app_localizations.dart';
 import 'package:controlapp/src/core/di/injector.dart';
 import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
@@ -20,7 +20,6 @@ import 'package:controlapp/data/tree_node.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class EnerjiWidget extends StatefulWidget {
   const EnerjiWidget({super.key});

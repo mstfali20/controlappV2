@@ -1,12 +1,16 @@
 import 'package:controlapp/const/Color.dart';
+import 'package:controlapp/const/data.dart' as legacy_data;
 import 'package:controlapp/const/fade_zoom.dart';
-import 'package:controlapp/src/features/climate/presentation/widgets/iklim_menu_widget.dart';
-import 'package:controlapp/src/features/energy/presentation/widgets/energy_menu_widget.dart';
+import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/climate/presentation/widgets/iklim_menu_widget.dart';
+import 'package:controlapp/src/features/enerji_izleme/energy/presentation/widgets/energy_menu_widget.dart';
 import 'package:controlapp/src/features/presentation/home/view_model/home_cubit.dart';
 import 'package:controlapp/src/features/presentation/home/view_model/home_state.dart';
 import 'package:controlapp/src/features/presentation/role/pages/climate_role_page.dart';
 import 'package:controlapp/src/features/presentation/role/pages/energy_role_page.dart';
+import 'package:controlapp/src/features/presentation/role/pages/renewable_role_page.dart';
 import 'package:controlapp/src/features/presentation/role/pages/webdeneme.dart';
+import 'package:controlapp/data/tree_node.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:controlapp/l10n/app_localizations.dart';
@@ -44,8 +48,16 @@ class HomePage extends StatelessWidget {
         }
 
         final module = state.selectedModule ?? HomeCubit.energyModuleCaption;
-        final moduleTitle =
-            state.selectedModule ?? HomeCubit.energyModuleCaption;
+        final organizationCaption = _resolveSelectedOrganizationCaption(state);
+        final isClimateModule =
+            organizationCaption == HomeCubit.climateModuleCaption ||
+                module == HomeCubit.climateModuleCaption;
+        final section = _resolveSection(
+          module,
+          organizationCaption: organizationCaption,
+        );
+        final isRenewableModule = section?.id == 'renewable';
+        final moduleTitle = _resolveModuleTitle(module, section);
         final deviceTitle =
             state.selectedDeviceTitle ?? state.plcTitle ?? 'Cihaz seçilmedi';
         final name = state.userSummary.fullName.isNotEmpty
@@ -62,7 +74,15 @@ class HomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeader(context, state, module, imageUrl, name),
+                  _buildHeader(
+                    context,
+                    state,
+                    module,
+                    imageUrl,
+                    name,
+                    organizationCaption,
+                    isClimateModule,
+                  ),
                   Padding(
                     padding: EdgeInsets.all(5.h),
                     child: FadeInAnimation(
@@ -97,18 +117,13 @@ class HomePage extends StatelessWidget {
                             physics: const AlwaysScrollableScrollPhysics(),
                             child: Column(
                               children: [
-                                Visibility(
-                                  visible:
-                                      module == HomeCubit.climateModuleCaption,
-                                  child: const IklimWidget(),
-                                  // child: const KazanWidget(),
-                                  // child: const WebKazanWidget(),
-                                ),
-                                Visibility(
-                                  visible:
-                                      module == HomeCubit.energyModuleCaption,
-                                  child: const EnerjiWidget(),
-                                ),
+                                if (isClimateModule) const IklimWidget(),
+                                if (!isClimateModule && isRenewableModule)
+                                  RenewableEnergyWidget(
+                                    moduleCaption: module,
+                                  ),
+                                if (!isClimateModule && !isRenewableModule)
+                                  const EnerjiWidget(),
                               ],
                             ),
                           ),
@@ -136,7 +151,10 @@ class HomePage extends StatelessWidget {
     String module,
     String? imageUrl,
     String name,
+    String? organizationCaption,
+    bool isClimateModule,
   ) {
+    final menuOrganization = organizationCaption ?? module;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: FadeInAnimation(
@@ -158,16 +176,16 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: module == HomeCubit.energyModuleCaption,
+                    visible: !isClimateModule,
                     child: EnerjiMenuWidget(
-                      organisation: module,
+                      organisation: menuOrganization,
                       loadAndParseTree: context.read<HomeCubit>().loadTreeNodes,
                     ),
                   ),
                   Visibility(
-                    visible: module == HomeCubit.climateModuleCaption,
+                    visible: isClimateModule,
                     child: IklimMenuWidget(
-                      organisation: module,
+                      organisation: menuOrganization,
                       loadAndParseTree: context.read<HomeCubit>().loadTreeNodes,
                     ),
                   ),
@@ -198,6 +216,58 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? _resolveSelectedOrganizationCaption(HomeState state) {
+    final organizationId =
+        state.session?.selectedOrganizationId ?? legacy_data.organizationid;
+    if (organizationId == null || organizationId.isEmpty) {
+      return null;
+    }
+    final source = state.treeJson ?? legacy_data.treeJson;
+    if (source.isEmpty) {
+      return null;
+    }
+    final root = TreeNode.parseTree(source);
+    if (root == null) {
+      return null;
+    }
+    final node = root.findById(organizationId);
+    if (node == null) {
+      return null;
+    }
+    final caption = node.caption.trim();
+    return caption.isNotEmpty ? caption : null;
+  }
+
+  SectionData? _resolveSection(
+    String moduleCaption, {
+    String? organizationCaption,
+  }) {
+    final normalized = moduleCaption.trim();
+    for (final section in legacy_data.sectionList) {
+      if (section.caption.trim() == normalized) {
+        return section;
+      }
+      for (final organization in section.organizations) {
+        if (organization.caption.trim() == normalized ||
+            (organizationCaption != null &&
+                organization.caption.trim() == organizationCaption.trim())) {
+          return section;
+        }
+      }
+    }
+    return null;
+  }
+
+  String _resolveModuleTitle(
+    String moduleCaption,
+    SectionData? section,
+  ) {
+    if (section == null) {
+      return moduleCaption;
+    }
+    return section.caption;
   }
 
   Widget _buildAvatar(String? imageUrl) {

@@ -9,6 +9,7 @@ import 'package:controlapp/src/features/presentation/home/view_model/home_state.
 import 'package:controlapp/src/features/presentation/role/pages/climate_role_page.dart';
 import 'package:controlapp/src/features/presentation/role/pages/energy_role_page.dart';
 import 'package:controlapp/src/features/presentation/role/pages/renewable_role_page.dart';
+import 'package:controlapp/src/features/yenilenebilir_enerji/ges/presentation/pages/renewable_ges_page.dart';
 import 'package:controlapp/src/features/presentation/role/pages/webdeneme.dart';
 import 'package:controlapp/data/tree_node.dart';
 import 'package:flutter/material.dart';
@@ -119,8 +120,9 @@ class HomePage extends StatelessWidget {
                               children: [
                                 if (isClimateModule) const IklimWidget(),
                                 if (!isClimateModule && isRenewableModule)
-                                  RenewableEnergyWidget(
-                                    moduleCaption: module,
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height,
+                                    child: RenewableGesPage(),
                                   ),
                                 if (!isClimateModule && !isRenewableModule)
                                   const EnerjiWidget(),

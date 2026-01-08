@@ -30,6 +30,10 @@ import '../../features/presentation/notifications/data/datasources/notifications
 import '../../features/presentation/notifications/data/repositories/notifications_repository_impl.dart';
 import '../../features/presentation/notifications/domain/repositories/notifications_repository.dart';
 import '../../features/presentation/notifications/domain/usecases/fetch_notifications_usecase.dart';
+import '../../features/yenilenebilir_enerji/ges/data/datasources/renewable_energy_remote_data_source.dart';
+import '../../features/yenilenebilir_enerji/ges/data/repositories/renewable_energy_repository_impl.dart';
+import '../../features/yenilenebilir_enerji/ges/domain/repositories/renewable_energy_repository.dart';
+import '../../features/yenilenebilir_enerji/ges/domain/usecases/fetch_renewable_consumption_history_usecase.dart';
 
 final getIt = GetIt.instance;
 
@@ -87,6 +91,15 @@ Future<void> configureDependencies() async {
     )
     ..registerLazySingleton<FetchEnergyCategoryBreakdownUseCase>(
       () => FetchEnergyCategoryBreakdownUseCase(getIt()),
+    )
+    ..registerLazySingleton<RenewableEnergyRemoteDataSource>(
+      () => RenewableEnergyRemoteDataSourceImpl(getIt()),
+    )
+    ..registerLazySingleton<RenewableEnergyRepository>(
+      () => RenewableEnergyRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton<FetchRenewableEnergyConsumptionHistoryUseCase>(
+      () => FetchRenewableEnergyConsumptionHistoryUseCase(getIt()),
     )
     ..registerLazySingleton<FetchClimateHistoryUseCase>(
       () => FetchClimateHistoryUseCase(getIt()),

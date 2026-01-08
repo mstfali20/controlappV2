@@ -158,8 +158,8 @@ class _RenewableEnergyWidgetState extends State<RenewableEnergyWidget> {
     if (label.isEmpty) {
       return '';
     }
-    label = label.replaceAll(RegExp('(?i)\\bges\\b'), '').trim();
-    label = label.replaceAll(RegExp('(?i)\\btoplam\\b'), '').trim();
+    label = label.replaceAll(RegExp(r'\bges\b', caseSensitive: false), '').trim();
+    label = label.replaceAll(RegExp(r'\btoplam\b', caseSensitive: false), '').trim();
     return label.isNotEmpty ? label : caption.trim();
   }
 

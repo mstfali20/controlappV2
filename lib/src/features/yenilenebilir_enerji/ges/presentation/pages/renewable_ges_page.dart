@@ -79,6 +79,13 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
     super.dispose();
   }
 
+  void _safeSetState(VoidCallback update) {
+    if (!mounted) {
+      return;
+    }
+    setState(update);
+  }
+
   Future<void> _initialize() async {
     await _loadGesDevices();
   }
@@ -87,7 +94,7 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
     try {
       final root = _parseTree();
       if (root == null) {
-        setState(() => _deviceError = 'tree_missing');
+        _safeSetState(() => _deviceError = 'tree_missing');
         return;
       }
 
@@ -98,28 +105,29 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
       final devices =
           _treeHelper.collect(root, context.read<HomeCubit>().state);
       if (devices.isEmpty) {
-        setState(() => _deviceError = 'ges_device_not_found');
+        _safeSetState(() => _deviceError = 'ges_device_not_found');
         return;
       }
 
       _populateDevices(devices);
     } catch (error) {
-      setState(() => _deviceError = error.toString());
+      _safeSetState(() => _deviceError = error.toString());
     } finally {
-      if (mounted) {
-        setState(() => _isLoadingDevices = false);
-      }
+      _safeSetState(() => _isLoadingDevices = false);
     }
   }
 
   void _populateDevices(List<TreeNode> devices) {
+    if (!mounted) {
+      return;
+    }
     final selection = _selectDevices(devices);
     final locations = _buildLocations(selection.displayDevices);
     log(
       'selection display=${selection.displayDevices.length} primary=${selection.primaryDevices.length}',
     );
 
-    setState(() {
+    _safeSetState(() {
       _displayDevices = List<TreeNode>.unmodifiable(selection.displayDevices);
       _deviceError = null;
     });
@@ -197,9 +205,7 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
       deviceCache[period] = null;
     } finally {
       _setHistoryLoading(device.id, false);
-      if (mounted) {
-        setState(() {});
-      }
+      _safeSetState(() {});
     }
   }
 
@@ -239,9 +245,7 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
       deviceCache[period] = null;
     } finally {
       _setSummaryLoading(device.id, false);
-      if (mounted) {
-        setState(() {});
-      }
+      _safeSetState(() {});
     }
   }
 
@@ -282,14 +286,12 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
       _deviceSnapshotCache[device.id] = null;
     } finally {
       _setSnapshotLoading(device.id, false);
-      if (mounted) {
-        setState(() {});
-      }
+      _safeSetState(() {});
     }
   }
 
   void _setHistoryLoading(String deviceId, bool loading) {
-    setState(() {
+    _safeSetState(() {
       if (loading) {
         _loadingHistoryDevices.add(deviceId);
       } else {
@@ -299,7 +301,7 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
   }
 
   void _setSummaryLoading(String deviceId, bool loading) {
-    setState(() {
+    _safeSetState(() {
       if (loading) {
         _loadingSummaryDevices.add(deviceId);
       } else {
@@ -309,7 +311,7 @@ class _RenewableGesPageState extends State<RenewableGesPage> {
   }
 
   void _setSnapshotLoading(String deviceId, bool loading) {
-    setState(() {
+    _safeSetState(() {
       if (loading) {
         _loadingSnapshotDevices.add(deviceId);
       } else {

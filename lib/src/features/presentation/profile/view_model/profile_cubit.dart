@@ -26,7 +26,10 @@ class ProfileCubit extends SafeCubit<ProfileState> {
     await _homeCubit.refreshCurrentDevice(forceRefresh: true);
   }
 
-  Future<void> selectOrganization(String caption) async {
+  Future<void> selectOrganization(
+    OrganizationData organization, {
+    SectionData? section,
+  }) async {
     emit(state.copyWith(status: ProfileStatus.loading, clearSnackbar: true));
 
     try {
@@ -36,13 +39,17 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         return;
       }
 
-
-      final normalizedCaption = caption.trim();
+      final normalizedCaption = organization.caption.trim();
       final organizationNode = nodes.firstWhere(
         (node) =>
             node.classType.trim() == 'obm_organization' &&
-            node.caption.trim() == normalizedCaption,
-        orElse: TreeNode.empty,
+            node.id == organization.id,
+        orElse: () => nodes.firstWhere(
+          (node) =>
+              node.classType.trim() == 'obm_organization' &&
+              node.caption.trim() == normalizedCaption,
+          orElse: TreeNode.empty,
+        ),
       );
 
       if (_isNodeEmpty(organizationNode)) {
@@ -50,8 +57,9 @@ class ProfileCubit extends SafeCubit<ProfileState> {
         return;
       }
 
-      final section = _resolveSectionForCaption(normalizedCaption);
-      final sectionId = section?.id;
+      final resolvedSection =
+          section ?? _resolveSectionForCaption(normalizedCaption);
+      final sectionId = resolvedSection?.id;
       final preferredCaptions =
           preferredDeviceCaptionsForSection(sectionId);
       final selectedDevice = findFirstDevice(
@@ -72,7 +80,7 @@ class ProfileCubit extends SafeCubit<ProfileState> {
               ? selectedDevice.title
               : selectedDevice.id);
 
-      final moduleCaption = section?.caption ?? caption;
+      final moduleCaption = resolvedSection?.caption ?? organization.caption;
       await _homeCubit.changeModule(moduleCaption);
       await _homeCubit.changeDevice(
         deviceId: deviceId,

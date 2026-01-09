@@ -23,8 +23,36 @@ import '../widgets/profile_module_tile.dart';
 import '../widgets/profile_option_card.dart';
 import '../widgets/profile_web_links.dart';
 
-class ProfilPage extends StatelessWidget {
+class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
+
+  @override
+  State<ProfilPage> createState() => _ProfilPageState();
+}
+
+class _ProfilPageState extends State<ProfilPage> {
+  final Set<String> _expandedSections = {};
+
+  void _toggleSection(String sectionId) {
+    setState(() {
+      if (!_expandedSections.remove(sectionId)) {
+        _expandedSections.add(sectionId);
+      }
+    });
+  }
+
+  void _collapseSection(String sectionId) {
+    if (!_expandedSections.contains(sectionId)) {
+      return;
+    }
+    setState(() {
+      _expandedSections.remove(sectionId);
+    });
+  }
+
+  bool _isSectionExpanded(String sectionId) {
+    return _expandedSections.contains(sectionId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +163,8 @@ class ProfilPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      ..._buildModuleTiles(context),
+                      if (_buildModuleSection(context) != null)
+                        _buildModuleSection(context)!,
                       ProfileLanguageSelector(
                         delay: 1.5,
                         languageProvider: languageProvider,
@@ -194,40 +223,181 @@ class ProfilPage extends StatelessWidget {
   List<Widget> _buildModuleTiles(BuildContext context) {
     if (legacy_data.sectionList.isNotEmpty) {
       return legacy_data.sectionList.map((section) {
-        return ProfileModuleTile(
-          icon: _sectionIcon(section.id),
-          text: section.caption,
-          delay: 1.4,
-          onTap: () => _handleSectionTap(context, section),
-        );
+        return _buildSectionTile(context, section);
       }).toList();
     }
 
-    final entries = [
-      _ProfileModuleEntry(
-          caption: legacy_data.iklimlendirmeIzlem, icon: Icons.air),
-      _ProfileModuleEntry(
-        caption: legacy_data.enerjiIzlem,
-        icon: Icons.settings_input_component,
-      ),
-      _ProfileModuleEntry(
-          caption: legacy_data.boyahaneIzlem, icon: Icons.brush),
-    ];
+    final iconMap = <String, IconData>{
+      legacy_data.iklimlendirmeIzlem: Icons.air,
+      legacy_data.enerjiIzlem: Icons.settings_input_component,
+      legacy_data.boyahaneIzlem: Icons.brush,
+    };
 
-    return entries
-        .where((entry) => legacy_data.organizationList
-            .any((organization) => organization.caption == entry.caption))
+    return legacy_data.organizationList
+        .where((organization) => iconMap.containsKey(organization.caption))
         .map(
-          (entry) => ProfileModuleTile(
-            icon: entry.icon,
-            text: entry.caption,
+          (organization) => ProfileModuleTile(
+            icon: iconMap[organization.caption] ?? Icons.category,
+            text: organization.caption,
             delay: 1.4,
             onTap: () {
-              context.read<ProfileCubit>().selectOrganization(entry.caption);
+              context
+                  .read<ProfileCubit>()
+                  .selectOrganization(organization);
             },
           ),
         )
         .toList();
+  }
+
+  Widget? _buildModuleSection(BuildContext context) {
+    final tiles = _buildModuleTiles(context);
+    if (tiles.isEmpty) {
+      return null;
+    }
+
+    return FadeInAnimation(
+      delay: 1.4,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          padding: EdgeInsets.all(16.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.widgets_rounded, size: 20.h, color: Colors.black),
+                  SizedBox(width: 8.h),
+                  Text(
+                    AppLocalizations.of(context)!.modulSec,
+                    style: TextStyle(
+                      fontSize: 18.h,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 12.h),
+              ...tiles,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTile(BuildContext context, SectionData section) {
+    final isExpanded = _isSectionExpanded(section.id);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ProfileModuleTile(
+          icon: _sectionIcon(section.id),
+          text: section.caption,
+          delay: 1.4,
+          trailing: AnimatedRotation(
+            turns: isExpanded ? 0.5 : 0.0,
+            duration: const Duration(milliseconds: 200),
+            child: Icon(
+              Icons.expand_more,
+              color: Colors.grey.shade600,
+            ),
+          ),
+          onTap: () => _toggleSection(section.id),
+        ),
+        AnimatedCrossFade(
+          firstChild: const SizedBox.shrink(),
+          secondChild: _buildSectionChildren(context, section),
+          crossFadeState: isExpanded
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 200),
+          firstCurve: Curves.easeOut,
+          secondCurve: Curves.easeIn,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionChildren(BuildContext context, SectionData section) {
+    if (section.organizations.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return Column(
+      children: section.organizations
+          .map((organization) =>
+              _buildOrganizationTile(context, section, organization))
+          .toList(),
+    );
+  }
+
+  Widget _buildOrganizationTile(
+    BuildContext context,
+    SectionData section,
+    OrganizationData organization,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(left: 28.h, right: 8.h, bottom: 8.h),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+            context
+                .read<ProfileCubit>()
+                .selectOrganization(organization, section: section);
+            _collapseSection(section.id);
+          },
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 14.h, vertical: 10.h),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.grey.shade200),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  _sectionIcon(section.id),
+                  size: 18.h,
+                  color: Colors.grey.shade700,
+                ),
+                SizedBox(width: 10.h),
+                Expanded(
+                  child: Text(
+                    organization.displayCaption,
+                    style: TextStyle(
+                      fontSize: 14.h,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade900,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right,
+                  size: 18.h,
+                  color: Colors.grey.shade600,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   IconData _sectionIcon(String sectionId) {
@@ -243,99 +413,6 @@ class ProfilPage extends StatelessWidget {
       default:
         return Icons.category;
     }
-  }
-
-  Future<void> _handleSectionTap(
-    BuildContext context,
-    SectionData section,
-  ) async {
-    if (section.organizations.isEmpty) {
-      return;
-    }
-
-    final organization = section.organizations.length == 1
-        ? section.organizations.first
-        : await _showOrganizationDialog(context, section);
-    if (organization == null) {
-      return;
-    }
-
-    context.read<ProfileCubit>().selectOrganization(organization.caption);
-  }
-
-  Future<OrganizationData?> _showOrganizationDialog(
-    BuildContext context,
-    SectionData section,
-  ) {
-    return showDialog<OrganizationData>(
-      barrierDismissible: true,
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                section.caption,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width / 1.2,
-                child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: section.organizations.length,
-                  itemBuilder: (context, index) {
-                    final organization = section.organizations[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          Navigator.pop(dialogContext, organization);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 22,
-                              vertical: 12,
-                            ),
-                            child: Center(
-                              child: Text(
-                                organization.displayCaption,
-                                style: const TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   static Future<void> _launchExternalUrl(String url) async {
@@ -516,11 +593,4 @@ class ProfilPage extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
-}
-
-class _ProfileModuleEntry {
-  const _ProfileModuleEntry({required this.caption, required this.icon});
-
-  final String caption;
-  final IconData icon;
 }

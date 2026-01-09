@@ -49,12 +49,9 @@ const Map<String, Map<String, String>> sectionDisplayCaptionOverrides = {
   },
   'renewable': {
     'GES': 'GES',
+    'Enerji İzleme Sistemi': 'GES',
   },
-  'utilities': {
-    'Klima Santrali İzleme Sistemi': 'Klima',
-    'Kazan İzleme Sistemi': 'Kazan',
-    'Kompresör İzleme Sistemi': 'Kompresör',
-  },
+  'utilities': {},
   'production': {
     'Boyahane İzleme Sistemi': 'Boyahane',
     'Dokuma Salonu': 'Dokuma',

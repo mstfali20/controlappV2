@@ -39,6 +39,16 @@ class LoginView extends StatelessWidget {
   }
 }
 
+class _LoginSelection {
+  const _LoginSelection({
+    required this.organization,
+    this.section,
+  });
+
+  final OrganizationData organization;
+  final SectionData? section;
+}
+
 class _LoginViewContent extends StatefulWidget {
   const _LoginViewContent();
 
@@ -483,18 +493,19 @@ class _LoginViewContentState extends State<_LoginViewContent> {
         return;
       }
 
-      final selectedOrganization = await _selectOrganizationForLogin(context);
-      if (selectedOrganization == null) {
+      final selection = await _selectOrganizationForLogin(context);
+      if (selection == null) {
         loginErrorAlert();
         return;
       }
 
-      serialTitle = selectedOrganization.caption;
+      serialTitle = selection.organization.caption;
       await guncelleFunc(
         context,
         session.username,
         sessionPassword,
-        serialTitle,
+        selection.organization,
+        section: selection.section,
       );
     } catch (error) {
       ScaffoldMessenger.of(context)
@@ -507,7 +518,7 @@ class _LoginViewContentState extends State<_LoginViewContent> {
     }
   }
 
-  Future<OrganizationData?> _selectOrganizationForLogin(
+  Future<_LoginSelection?> _selectOrganizationForLogin(
     BuildContext context,
   ) async {
     if (sectionList.isNotEmpty) {
@@ -526,17 +537,21 @@ class _LoginViewContentState extends State<_LoginViewContent> {
       return null;
     }
     if (organizationList.length == 1) {
-      return organizationList.first;
+      return _LoginSelection(organization: organizationList.first);
     }
 
-    return _showOrganizationPicker(
+    final organization = await _showOrganizationPicker(
       context,
       organizationList,
       title: AppLocalizations.of(context)!.modulSec,
     );
+    if (organization == null) {
+      return null;
+    }
+    return _LoginSelection(organization: organization);
   }
 
-  Future<OrganizationData?> _selectOrganizationFromSection(
+  Future<_LoginSelection?> _selectOrganizationFromSection(
     BuildContext context,
     SectionData section,
   ) async {
@@ -544,13 +559,23 @@ class _LoginViewContentState extends State<_LoginViewContent> {
       return null;
     }
     if (section.organizations.length == 1) {
-      return section.organizations.first;
+      return _LoginSelection(
+        organization: section.organizations.first,
+        section: section,
+      );
     }
 
-    return _showOrganizationPicker(
+    final organization = await _showOrganizationPicker(
       context,
       section.organizations,
       title: section.caption,
+    );
+    if (organization == null) {
+      return null;
+    }
+    return _LoginSelection(
+      organization: organization,
+      section: section,
     );
   }
 
@@ -782,18 +807,6 @@ class _LoginViewContentState extends State<_LoginViewContent> {
     );
   }
 
-  String? _resolveSectionIdForCaption(String caption) {
-    final normalized = caption.trim();
-    for (final section in sectionList) {
-      for (final organization in section.organizations) {
-        if (organization.caption.trim() == normalized) {
-          return section.id;
-        }
-      }
-    }
-    return null;
-  }
-
   SectionData? _resolveSectionForCaption(String caption) {
     final normalized = caption.trim();
     for (final section in sectionList) {
@@ -814,27 +827,33 @@ class _LoginViewContentState extends State<_LoginViewContent> {
     BuildContext context,
     String username,
     String password,
-    String selectedSerialTitle,
-  ) async {
+    OrganizationData organization, {
+    SectionData? section,
+  }) async {
     final fetchUseCase = getIt<FetchEnergySnapshotUseCase>();
 
     try {
       // Tree verilerini yükle ve işle
       List<TreeNode> nodes = await _loadAndParseTree();
 
-      final normalizedSelection = selectedSerialTitle.trim();
+      final normalizedSelection = organization.caption.trim();
       TreeNode organizizasyom = nodes.firstWhere(
         (node) =>
             node.classType.trim() == 'obm_organization' &&
-            node.caption.trim() == normalizedSelection,
-        orElse: () =>
-            TreeNode.empty(), // Burada da boş bir TreeNode döndürmelisiniz
+            node.id == organization.id,
+        orElse: () => nodes.firstWhere(
+          (node) =>
+              node.classType.trim() == 'obm_organization' &&
+              node.caption.trim() == normalizedSelection,
+          orElse: () => TreeNode.empty(),
+        ),
       );
 
       // Burada organizizasyom altında istediğiniz verilere erişebilirsiniz
       if (organizizasyom != TreeNode.empty()) {
-        final section = _resolveSectionForCaption(selectedSerialTitle);
-        final sectionId = section?.id;
+        final resolvedSection =
+            section ?? _resolveSectionForCaption(normalizedSelection);
+        final sectionId = resolvedSection?.id;
         final preferredCaptions = preferredDeviceCaptionsForSection(sectionId);
         final ilkVeri = findFirstDevice(
           organizizasyom,
@@ -853,13 +872,13 @@ class _LoginViewContentState extends State<_LoginViewContent> {
 
         final ilkVeriId = ilkVeri.id;
         plcTitle = ilkVeri.caption;
-        serialTitle = selectedSerialTitle;
-        selectedModule = section?.caption ?? selectedSerialTitle;
+        serialTitle = organization.caption;
+        selectedModule = resolvedSection?.caption ?? organization.caption;
         userDataConst['selected_module'] = selectedModule;
         log("İlk Veri ID: $ilkVeriId");
 
         bool success = false;
-        if (selectedSerialTitle == iklimlendirmeIzlem) {
+        if (organization.caption == iklimlendirmeIzlem) {
           final climateUseCase = getIt<FetchClimateSnapshotUseCase>();
           final snapshot = await climateUseCase(
             FetchClimateSnapshotParams(

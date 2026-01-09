@@ -2,15 +2,16 @@ import 'package:controlapp/const/Color.dart';
 import 'package:controlapp/const/data.dart' as legacy_data;
 import 'package:controlapp/const/fade_zoom.dart';
 import 'package:controlapp/src/features/auth/data/services/organization_service.dart';
+import 'package:controlapp/src/core/config/tree_sections.dart';
 import 'package:controlapp/src/features/yardimci_tesisler/climate/presentation/widgets/iklim_menu_widget.dart';
 import 'package:controlapp/src/features/enerji_izleme/energy/presentation/widgets/energy_menu_widget.dart';
 import 'package:controlapp/src/features/presentation/home/view_model/home_cubit.dart';
 import 'package:controlapp/src/features/presentation/home/view_model/home_state.dart';
 import 'package:controlapp/src/features/presentation/role/pages/climate_role_page.dart';
 import 'package:controlapp/src/features/presentation/role/pages/energy_role_page.dart';
-import 'package:controlapp/src/features/presentation/role/pages/renewable_role_page.dart';
 import 'package:controlapp/src/features/yenilenebilir_enerji/ges/presentation/pages/renewable_ges_page.dart';
-import 'package:controlapp/src/features/presentation/role/pages/webdeneme.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/kazan/presentation/pages/kazan_page.dart';
+import 'package:controlapp/src/features/yardimci_tesisler/kompresor/presentation/pages/kompresor_page.dart';
 import 'package:controlapp/data/tree_node.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +59,11 @@ class HomePage extends StatelessWidget {
           organizationCaption: organizationCaption,
         );
         final isRenewableModule = section?.id == 'renewable';
+        final utilitiesPage =
+            _resolveUtilitiesPage(organizationCaption ?? module);
         final moduleTitle = _resolveModuleTitle(module, section);
+        final moduleSubtitle =
+            _resolveModuleSubtitle(section, organizationCaption);
         final deviceTitle =
             state.selectedDeviceTitle ?? state.plcTitle ?? 'Cihaz seçilmedi';
         final name = state.userSummary.fullName.isNotEmpty
@@ -100,6 +105,21 @@ class HomePage extends StatelessWidget {
                               ),
                               textAlign: TextAlign.center,
                             ),
+                            if (moduleSubtitle != null &&
+                                moduleSubtitle.isNotEmpty &&
+                                moduleSubtitle != moduleTitle)
+                              Padding(
+                                padding: EdgeInsets.only(top: 4.h),
+                                child: Text(
+                                  moduleSubtitle,
+                                  style: TextStyle(
+                                    fontSize: 14.h,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -119,12 +139,19 @@ class HomePage extends StatelessWidget {
                             child: Column(
                               children: [
                                 if (isClimateModule) const IklimWidget(),
+                                if (!isClimateModule && utilitiesPage != null)
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height,
+                                    child: utilitiesPage,
+                                  ),
                                 if (!isClimateModule && isRenewableModule)
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height,
                                     child: RenewableGesPage(),
                                   ),
-                                if (!isClimateModule && !isRenewableModule)
+                                if (!isClimateModule &&
+                                    utilitiesPage == null &&
+                                    !isRenewableModule)
                                   const EnerjiWidget(),
                               ],
                             ),
@@ -251,11 +278,23 @@ class HomePage extends StatelessWidget {
       if (section.caption.trim() == normalized) {
         return section;
       }
+    }
+
+    for (final section in legacy_data.sectionList) {
       for (final organization in section.organizations) {
-        if (organization.caption.trim() == normalized ||
-            (organizationCaption != null &&
-                organization.caption.trim() == organizationCaption.trim())) {
+        if (organization.caption.trim() == normalized) {
           return section;
+        }
+      }
+    }
+
+    if (organizationCaption != null) {
+      final organizationNormalized = organizationCaption.trim();
+      for (final section in legacy_data.sectionList) {
+        for (final organization in section.organizations) {
+          if (organization.caption.trim() == organizationNormalized) {
+            return section;
+          }
         }
       }
     }
@@ -270,6 +309,39 @@ class HomePage extends StatelessWidget {
       return moduleCaption;
     }
     return section.caption;
+  }
+
+  String? _resolveModuleSubtitle(
+    SectionData? section,
+    String? organizationCaption,
+  ) {
+    if (section == null || organizationCaption == null) {
+      return null;
+    }
+    final normalized = organizationCaption.trim();
+    if (normalized.isEmpty) {
+      return null;
+    }
+    for (final organization in section.organizations) {
+      if (organization.caption.trim() == normalized) {
+        return organization.displayCaption;
+      }
+    }
+    return displayCaptionForSection(section.id, normalized);
+  }
+
+  Widget? _resolveUtilitiesPage(String? organizationCaption) {
+    if (organizationCaption == null) {
+      return null;
+    }
+    final normalized = organizationCaption.trim().toLowerCase();
+    if (normalized.contains('kazan')) {
+      return const KazanPage();
+    }
+    if (normalized.contains('kompres')) {
+      return const KompresorPage();
+    }
+    return null;
   }
 
   Widget _buildAvatar(String? imageUrl) {
